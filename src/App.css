@@ -13,6 +13,11 @@
   }
 }
 
+.errorMsg {
+  color: #cc0000;
+  margin-bottom: 12px;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
