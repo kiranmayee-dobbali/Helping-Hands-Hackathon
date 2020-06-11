@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { makeStyles } from "@material-ui/core/styles"
 
 import {
@@ -18,12 +18,13 @@ import ListAltOutlinedIcon from '@material-ui/icons/ListAltOutlined';
 import AssignmentTurnedInOutlinedIcon from '@material-ui/icons/AssignmentTurnedInOutlined';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
-
-import Feed  from "./Feed";
-import Mytasks from "./Mytasks";
 import Askhelp from './Askhelp'
 import Settings from './Settings'
 import Signout from './Signout'
+import Feed  from "./Feed";
+//const Mytasks = lazy(() => import('./Mytasks'))
+import Mytasks from "./Mytasks"
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -54,13 +55,14 @@ function Mainpage2() {
                 <ListItemText primary={"Feed"} />
               </ListItem>
               </Link>
-              <Link to="/Mytasks" className={classes.link}>
 
+              <Link to="/Mytasks" className={classes.link}>
               <ListItem button key={"My Tasks"}>
                 <ListItemIcon><AssignmentTurnedInOutlinedIcon /></ListItemIcon>
                 <ListItemText primary={"My Tasks"} />
               </ListItem>
               </Link>
+
 
               <Link to="/Askhelp" className={classes.link}>
 
