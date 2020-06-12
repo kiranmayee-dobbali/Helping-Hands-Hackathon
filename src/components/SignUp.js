@@ -1,13 +1,13 @@
 import React from "react";
-import '../App.css';
+//import '../App.css';
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBCard, MDBCardBody, MDBIcon, MDBInput } from 'mdbreact';
 import { Switch, Route ,withRouter} from 'react-router-dom'
-import 'mdbreact/dist/css/mdb.css'; 
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import 'bootstrap-css-only/css/bootstrap.min.css'; 
 import {BrowserRouter as Router,NavLink} from 'react-router-dom'
 import Login from "./Login";
-
+import '../index.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import 'bootstrap-css-only/css/bootstrap.min.css';
+import 'mdbreact/dist/css/mdb.css';
 class SignUp extends React.Component {
 
 state = {
@@ -302,7 +302,7 @@ required
               </NavLink>
               </form>
 
-             
+
 
             </MDBCardBody>
           </MDBCard>

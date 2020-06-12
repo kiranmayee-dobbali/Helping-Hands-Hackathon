@@ -19,6 +19,7 @@ import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
 import {BrowserRouter as Router,Route,NavLink,Switch,Redirect} from 'react-router-dom'
 import Feed from './Feed'
 import Link from '@material-ui/core/Link';
+import Mytasks from './Mytasks'
 
 
 const drawerWidth = 240;
@@ -49,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
  function Mainpage() {
   const classes = useStyles();
 
-  
+
     const callFeed =() =>{
         console.log("rssed");
         return(
@@ -91,10 +92,12 @@ const useStyles = makeStyles((theme) => ({
                 <ListItemText primary={"Feed"} />
               </ListItem>
               </Link>
+                <Link to='/Mytasks' component={Mytasks}>
               <ListItem button key={"My Tasks"}>
                 <ListItemIcon><AssignmentTurnedInOutlinedIcon /></ListItemIcon>
                 <ListItemText primary={"My Tasks"} />
               </ListItem>
+                </Link>
               <ListItem button key={"Ask for Help"}>
                 <ListItemIcon><CreateOutlinedIcon /></ListItemIcon>
                 <ListItemText primary={"Ask for Help"} />
@@ -109,13 +112,13 @@ const useStyles = makeStyles((theme) => ({
               </ListItem>
           </List>
           <Divider />
-          
+
         </div>
         </Router>
       </Drawer>
       <main className={classes.content}>
         <Toolbar />
-        
+
       </main>
     </div>
   );
