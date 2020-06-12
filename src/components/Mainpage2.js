@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function Mainpage2() {
+function Mainpage2(props) {
   const classes = useStyles();
   return (
     <Router>
@@ -46,6 +46,7 @@ function Mainpage2() {
           open={true}
           classes={{ paper: classes.drawerPaper }}
         >
+        
           <List>
 
               <Link to='/Feed' className={classes.link}>
@@ -89,8 +90,8 @@ function Mainpage2() {
               </Link>
 
           </List>
+  
         </Drawer>
-
 
         <Switch>
           <Route exact path="/Feed">

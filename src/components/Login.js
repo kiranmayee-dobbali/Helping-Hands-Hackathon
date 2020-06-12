@@ -13,8 +13,9 @@ import { withStyles ,makeStyles} from '@material-ui/core/styles';
 import Link from '@material-ui/core/Link';
 import {useState, useEffect} from 'react';
 import SignUp from './SignUp'
-import {BrowserRouter as Router,Route,NavLink,Switch,Redirect} from 'react-router-dom'
+import { Router,Route,NavLink,Switch,Redirect,withRouter} from 'react-router-dom'
 import Mainpage2 from "./Mainpage2";
+
 
 const emailRegex = RegExp(
     /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
@@ -66,10 +67,13 @@ const emailRegex = RegExp(
 
 
 
-export default function SignIn(props) {
+function SignIn(props) {
+  
   const classes = styles();
 
+
   const handleSubmit = (e) => {
+
     e.preventDefault();
   
     if (formValid({emailError,passwordError},{email,password})) {
@@ -91,32 +95,45 @@ export default function SignIn(props) {
       body:JSON.stringify({email,password})
       
       }
-  ).then(response => response.text()).then(abc =>  {
-    console.log(abc);
-    
-    setvalues(abc);
-  })
+  ).then(response => response.text()).then(result =>  {
+    console.log(result);
+    if (result=="Valid") {    
+      //props.handleSuccessfulAuth(finalresult);}
+      {props.handleSuccessfulAuth()}   
+     }
+      else{
+        console.log("no next page");
+        
+      }
+       })
+
+  console.log("chech");
+
+
   };
- 
+
+
+
+  
+  
 const openMainpage=()=>{
   return(
     <Redirect to="/Mainpage2"/>
-
-
   )
 }
 
   function setvalues(inputval){
     finalresult = inputval;
-
-    if(finalresult == "Valid"){
-      console.log("user emailid is valid",finalresult);
-      openMainpage()
-
-    }
-    else{
-    console.log("user emaild id is invalid",finalresult);
-    }
+    
+    if (finalresult=="Valid") {    
+      //props.handleSuccessfulAuth(finalresult);}
+      {props.handleSuccessfulAuth()}   
+     }
+      else{
+        console.log("no next page");
+        
+      }
+     
   }
 
   const handleChange = (e) => {
@@ -167,7 +184,6 @@ const openMainpage=()=>{
 
         let [emailError, setEmailError] = useState("");
         let [passwordError, setPasswordError] = useState("");
-        let [validLogin, setValidLogin] = useState("");
         let finalresult = "";
 
         return (
@@ -178,7 +194,8 @@ const openMainpage=()=>{
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Sign in!
+                        Sign in! Status :{props.logInStatus}  
+                        
                     </Typography>
 
                     <form className={classes.form} onSubmit={handleSubmit} action="http://localhost:5000/hello" method="POST" noValidate>
@@ -259,3 +276,4 @@ const openMainpage=()=>{
     
 }
 
+export default (SignIn);
