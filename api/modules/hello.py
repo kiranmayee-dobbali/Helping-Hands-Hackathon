@@ -1,13 +1,21 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import os
+from modules import app
+from sqlalchemy.ext.automap import automap_base
 
-app = Flask(__name__)
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:dbpassword@localhost:5432/communityproject'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = "True"
 db = SQLAlchemy(app)
 
 userstable = db.Table('users', db.metadata, autoload=True, autoload_with=db.engine)
+
+
+Base = automap_base()
+Base.prepare(db.engine, reflect=True)
+Post = Base.classes.posts
+
 """
 class Database():
     sa_url ='postgresql://postgres:123456@localhost:5432/communityproject'l
@@ -35,9 +43,11 @@ class Database():
 def hello_world():
     if request.method == "POST":
         login_data = request.json
+        print("login",login_data)
         print("email", login_data['email'])
         print("password", login_data['password'])
         print("data base is")
+        print("PSOT CLASS",Post)
         results = db.session.query(userstable).all()
         all_data = {}
         for r in results:

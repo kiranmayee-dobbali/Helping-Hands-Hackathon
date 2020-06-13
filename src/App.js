@@ -21,14 +21,21 @@ import { useHistory} from 'react-router';
 
 function App(props) {
   const [loggedInStatus, setLoginStatus] = useState("NOT_LOGGED_IN");
-  const [user, setUser]= useState("dummy");
-
+  let userEmail = null; 
   const history2 = useHistory()
 
   function handleSuccessfulAuth(data){
-    props.history.push("/Mainpage2");
+    console.log("data email-->", data);
+    userEmail = data;
+    console.log("emailid is----->",userEmail);
+
+    props.history.push(
+    {pathname:"/Mainpage2",
+    state:{userEmail}
+    });
     history2.go()
   }
+
 
 
   return (
@@ -40,16 +47,23 @@ function App(props) {
             <Route exact path="/" component={SignIn} />
             <Route exact path="/signin"
             render ={ props =>(
-              <SignIn {...props}   logInStatus = {loggedInStatus} handleSuccessfulAuth={handleSuccessfulAuth} user={user} setUser={setUser} setLoginStatus={setLoginStatus}/>
+              <SignIn {...props}   logInStatus = {loggedInStatus} handleSuccessfulAuth={handleSuccessfulAuth} />
             )
             }
             />
             <Route exact path="/SignUp" strict component={SignUp} />
-            <Route exact path="/Mainpage" strict component={Mainpage} />
             <Route exact path='/Feed' strict component={Feed}/>
+            <Route exact path='/Askhelp' 
+             render ={ props =>(
+              <Askhelp {...props}  userEmail={userEmail}/>
+            )
+          }        
+                      
+            />
+
             <Route exact path="/Mainpage2"
             render ={ props =>(
-              <Mainpage2 {...props}   logInStatus = {loggedInStatus}/>
+              <Mainpage2 {...props}  logInStatus = {loggedInStatus}/>
             )
           }        
             />

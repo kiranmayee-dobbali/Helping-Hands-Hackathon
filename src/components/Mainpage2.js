@@ -1,9 +1,13 @@
 import React, { lazy, Suspense } from 'react';
 import { makeStyles } from "@material-ui/core/styles"
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 import {
   BrowserRouter as Router,
-  Switch, Route, Link
+  Switch, Route, Link,
+  withRouter
 } from "react-router-dom";
 
 import {
@@ -26,28 +30,61 @@ import Feed  from "./Feed";
 import Mytasks from "./Mytasks"
 
 
+const drawerWidth = 210;
 
 const useStyles = makeStyles((theme) => ({
-  drawerPaper: { width: 'inherit' },
-  link: {
+  root: {
+    display: 'flex',
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
+  },
+  drawerPaper: {
+    width: drawerWidth,
+  },
+  drawerContainer: {
+    overflow: 'auto',
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
+  },
+    link: {
     textDecoration: 'none',
     color: theme.palette.text.primary
+  },
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1,
   }
 }))
 
 function Mainpage2(props) {
   const classes = useStyles();
+  const emailid = props.location.state;
+  // console.log("email id passedon ",emailid['userEmail']);
+  const email = emailid['userEmail'];
+  console.log("email id passedon ",email);
+
   return (
     <Router>
-      <div style={{ display: 'flex' }}>
+      <div className={classes.root}>
+      <CssBaseline />
+      <AppBar position="fixed" className={classes.appBar}>
+        <Toolbar>
+          <Typography variant="h6" noWrap>
+            Permanent drawer
+          </Typography>
+        </Toolbar>
+      </AppBar>
         <Drawer
-          style={{ width: '220px' }}
-          variant="persistent"
-          anchor="left"
-          open={true}
+          className={classes.drawer}
+          variant="permanent"
           classes={{ paper: classes.drawerPaper }}
         >
-        
+        <Toolbar />
+
+        <div className={classes.drawerContainer}>
           <List>
 
               <Link to='/Feed' className={classes.link}>
@@ -65,7 +102,7 @@ function Mainpage2(props) {
               </Link>
 
 
-              <Link to="/Askhelp" className={classes.link}>
+              <Link to={{pathname:"/Askhelp"}}  className={classes.link}>
 
               <ListItem button key={"Ask for Help"}>
                 <ListItemIcon><CreateOutlinedIcon /></ListItemIcon>
@@ -92,7 +129,8 @@ function Mainpage2(props) {
               </Link>
 
           </List>
-  
+      
+        </div>
         </Drawer>
 
         <Switch>
@@ -104,9 +142,11 @@ function Mainpage2(props) {
          <Mytasks></Mytasks>
           </Route>
 
-          <Route exact path="/Askhelp">
-         <Askhelp></Askhelp>
-          </Route>
+          <Route exact path="/Askhelp"
+           render={(props) => <Askhelp {...props} email={email} />}
+          
+          />
+         
 
           <Route exact path="/Settings">
          <Settings></Settings>
@@ -122,4 +162,4 @@ function Mainpage2(props) {
   );
 }
 
-export default Mainpage2;
+export default withRouter(Mainpage2);

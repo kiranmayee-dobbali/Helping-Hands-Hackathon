@@ -1,5 +1,6 @@
 import React from 'react';
 import Mainpage2 from './Mainpage2';
+import Toolbar from '@material-ui/core/Toolbar';
 
 import {
   Drawer, List, ListItem,
@@ -7,18 +8,81 @@ import {
   Container, Typography,
 } from "@material-ui/core";
 
+import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import ButtonBase from '@material-ui/core/ButtonBase';
+import Button from '@material-ui/core/Button';
+
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(2),
+    margin: 'auto',
+    maxWidth: 500,
+  },
+  image: {
+    width: 128,
+    height: 128,
+  },
+  img: {
+    margin: 'auto',
+    display: 'block',
+    maxWidth: '100%',
+    maxHeight: '100%',
+  },
+}));
+
+
 export default function Feed(props){
-return(
-  
+
+  const classes = useStyles();
+
+  return(
+
     <Container>  
-    <Typography variant="h3" gutterBottom>
+    <Toolbar>
+    </Toolbar>
+    <Typography variant="h6" gutterBottom>
       Home
     </Typography>
-    <Typography variant="body1" gutterBottom>
-    logInStatus :{props.logInStatus}
-        NOW IN FEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED
-      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-    </Typography>
+    <div className={classes.root}>
+      <Paper className={classes.paper}>
+        <Grid container spacing={2}>
+          <Grid item>
+            <ButtonBase className={classes.image}>
+              <img className={classes.img} alt="complex" src="/static/images/grid/complex.jpg" />
+            </ButtonBase>
+          </Grid>
+          <Grid item xs={12} sm container>
+            <Grid item xs container direction="column" spacing={2}>
+              <Grid item xs>
+                <Typography gutterBottom variant="subtitle1">
+                  Standard license
+                </Typography>
+                <Typography variant="body2" gutterBottom>
+                  Full resolution 1920x1080 • JPEG
+                </Typography>
+                <Typography variant="body2" color="textSecondary">
+                  ID: 1030114
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Button variant="body2" style={{ cursor: 'pointer' }}>
+                  Remove
+                </Button>
+              </Grid>
+            </Grid>
+            <Grid item>
+              <Typography variant="subtitle1">$19.00</Typography>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Paper>
+    </div>
   </Container>
   
 );

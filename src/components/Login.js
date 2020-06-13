@@ -98,18 +98,14 @@ function SignIn(props) {
   ).then(response => response.text()).then(result =>  {
     console.log(result);
     if (result=="Valid") {    
-      //props.handleSuccessfulAuth(finalresult);}
-      {props.handleSuccessfulAuth()}   
+      //props.handleSuccessfulAuth(finalresult);}      
+      {props.handleSuccessfulAuth(email)}   
      }
       else{
         console.log("no next page");
         
       }
        })
-
-  console.log("chech");
-
-
   };
 
 
@@ -127,7 +123,7 @@ const openMainpage=()=>{
     
     if (finalresult=="Valid") {    
       //props.handleSuccessfulAuth(finalresult);}
-      {props.handleSuccessfulAuth()}   
+      {props.handleSuccessfulAuth(email)}   
      }
       else{
         console.log("no next page");
@@ -276,4 +272,4 @@ const openMainpage=()=>{
     
 }
 
-export default (SignIn);
+export default withRouter(SignIn);

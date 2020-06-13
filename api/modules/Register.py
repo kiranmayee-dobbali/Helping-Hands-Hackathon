@@ -9,8 +9,10 @@ import psycopg2
 import re
 import hashlib,datetime
 #from flask_mysqldb import MySQL
+from modules import app
 
-app = Flask(__name__)
+
+
 app.config['JSON_SORT_KEYS'] = False
 
 
@@ -83,7 +85,7 @@ def tasks():
     if request.method == 'POST':
         if 'id' in request.form:
             user_id = request.form['id']
-            con = psycopg2.connect(dbname="communityproject", user="postgres", password="")
+            con = psycopg2.connect(dbname="communityproject", user="postgres", password="dbpassword")
             cur = con.cursor()
             cur.execute('SELECT POST, DEADLINE, STATUS FROM Posts WHERE Volunteer_id ='+user_id+';')
             tuples = cur.fetchall()
@@ -102,8 +104,8 @@ def tasks():
     
 
 
-if __name__ == '__main__':
-    # This is used when running locally only. When deploying to Google App
-    # Engine, a webserver process such as Gunicorn will serve the app. This
-    # can be configured by adding an `entrypoint` to app.yaml.
-    app.run()
+# if __name__ == '__main__':
+#     # This is used when running locally only. When deploying to Google App
+#     # Engine, a webserver process such as Gunicorn will serve the app. This
+#     # can be configured by adding an `entrypoint` to app.yaml.
+#     app.run()
