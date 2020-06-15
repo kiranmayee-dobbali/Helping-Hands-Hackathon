@@ -1,8 +1,6 @@
-import psycopg2
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.automap import automap_base
-from sqlalchemy import create_engine
 
 from modules import app
 

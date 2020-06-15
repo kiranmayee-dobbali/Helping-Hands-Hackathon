@@ -26,6 +26,8 @@ import Askhelp from './Askhelp'
 import Settings from './Settings'
 import Signout from './Signout'
 import Feed  from "./Feed";
+import Feedmain from './Feedmain';
+
 //const Mytasks = lazy(() => import('./Mytasks'))
 import Mytasks from "./Mytasks"
 
@@ -64,7 +66,7 @@ function Mainpage2(props) {
   const emailid = props.location.state;
   // console.log("email id passedon ",emailid['userEmail']);
   const email = emailid['userEmail'];
-  console.log("email id passedon ",email);
+  console.log("email id passedon ",email);  
 
   return (
     <Router>
@@ -87,7 +89,7 @@ function Mainpage2(props) {
         <div className={classes.drawerContainer}>
           <List>
 
-              <Link to='/Feed' className={classes.link}>
+              <Link to='/Feedmain' className={classes.link}>
               <ListItem button key={"Feed"} >
                 <ListItemIcon><ListAltOutlinedIcon /> </ListItemIcon>
                 <ListItemText primary={"Feed"} />
@@ -134,10 +136,11 @@ function Mainpage2(props) {
         </Drawer>
 
         <Switch>
-          <Route exact path="/Feed">
-         <Feed>         </Feed>
+          <Route exact path="/Feedmain"
+          render={(props) => <Feedmain {...props} email={email} />}
+          
+          />
 
-          </Route>
           <Route exact path="/Mytasks">
          <Mytasks></Mytasks>
           </Route>

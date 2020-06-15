@@ -13,7 +13,24 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Button from '@material-ui/core/Button';
+import { Alert,AlertTitle } from '@material-ui/lab';
 
+
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Slide from '@material-ui/core/Slide';
+
+// import helpinghands from '../static/helping-hands.jpg';
+// src={helpinghands}
+
+
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
     margin: 'auto',
-    maxWidth: 500,
+    maxWidth: 1000,
   },
   image: {
     width: 128,
@@ -40,44 +57,93 @@ const useStyles = makeStyles((theme) => ({
 export default function Feed(props){
 
   const classes = useStyles();
+ let { id,title,description, post_user_id,deadline } = props.person;
+//  let {id,title,location,description}= props.person;
+  console.log("got valus",title,description);
 
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  function updateVolunteerid(){
+      //nothin
+  }
+
+  const handleClose = (e,value) => {   
+    setOpen(false);
+    if(value=="yes"){
+      //add to my tasks
+      updateVolunteerid();
+      console.log(value);
+      
+    }    
+  };
+
+
+  
   return(
 
     <Container>  
     <Toolbar>
     </Toolbar>
-    <Typography variant="h6" gutterBottom>
-      Home
-    </Typography>
+
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <Grid container spacing={2}>
+        <Grid container spacing={1}>
           <Grid item>
             <ButtonBase className={classes.image}>
-              <img className={classes.img} alt="complex" src="/static/images/grid/complex.jpg" />
+              <img className={classes.img} alt="complex"/>
             </ButtonBase>
           </Grid>
           <Grid item xs={12} sm container>
             <Grid item xs container direction="column" spacing={2}>
               <Grid item xs>
                 <Typography gutterBottom variant="subtitle1">
-                  Standard license
-                </Typography>
-                <Typography variant="body2" gutterBottom>
-                  Full resolution 1920x1080 • JPEG
+                  {title}
                 </Typography>
                 <Typography variant="body2" color="textSecondary">
-                  ID: 1030114
+                  {post_user_id}
                 </Typography>
+                <Typography variant="body2" gutterBottom>
+                  {description}
+                </Typography>
+
               </Grid>
               <Grid item>
-                <Button variant="body2" style={{ cursor: 'pointer' }}>
-                  Remove
+                <Button variant="contained" color="primary" onClick={handleClickOpen}>
+                  Volunteer
                 </Button>
+                <Dialog
+                  open={open}
+                  TransitionComponent={Transition}
+                  keepMounted
+                  onClose={handleClose}
+                  aria-labelledby="alert-dialog-slide-title"
+                  aria-describedby="alert-dialog-slide-description"
+                >
+        <DialogTitle id="alert-dialog-slide-title">{"Do you want to vounteer for this task?"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            Please vounteer for this task only if you are able to complete it by deadline. Taking up task and not finishing
+            it will not help your community people.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={(e) => {handleClose(e, "no")}} color="primary">
+            No
+          </Button>
+          <Button onClick={(e) => {handleClose(e, "yes")}} color="primary">
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
               </Grid>
-            </Grid>
+            </Grid> 
             <Grid item>
-              <Typography variant="subtitle1">$19.00</Typography>
+  <Typography variant="subtitle1">By:{deadline}</Typography>
             </Grid>
           </Grid>
         </Grid>

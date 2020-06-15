@@ -8,7 +8,6 @@ import 'bootstrap-css-only/css/bootstrap.min.css';
 import Home from './components/Home';
 import SignIn from './components/Login'
 import SignUp from "./components/SignUp"
-import Mainpage from "./components/Mainpage"
 import Feed from "./components/Feed";
 import Mainpage2 from "./components/Mainpage2"
 import  Mytasks  from "./components/Mytasks";
@@ -17,6 +16,7 @@ import Settings from './components/Settings'
 import Signout from './components/Signout'
 import {useState, useEffect} from 'react';
 import { useHistory} from 'react-router';
+import Feedmain from './components/Feedmain';
 
 
 function App(props) {
@@ -53,6 +53,8 @@ function App(props) {
             />
             <Route exact path="/SignUp" strict component={SignUp} />
             <Route exact path='/Feed' strict component={Feed}/>
+            <Route exact path='/Feedmain' strict component={Feedmain}/>
+
             <Route exact path='/Askhelp' 
              render ={ props =>(
               <Askhelp {...props}  userEmail={userEmail}/>
