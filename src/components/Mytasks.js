@@ -98,13 +98,14 @@ class Mytasks extends React.Component {
         renderTableHeader() {
             console.log('In header')
             let intial = (this.state.Tasks)[0]
+            console.log("initial render", intial);
+            
             intial['Description'] = 'D';
             //intial['Delete'] = 'C';
             console.log(intial)
             return Object.keys(intial).map((key, index) => {
-                    return ( < th key = {
-                            index
-                        } show = {false}> {
+                    return ( <th key = { index} show = {false}> 
+                    {
                             key.toUpperCase()
                         } < /th>)
                     })
@@ -115,18 +116,9 @@ class Mytasks extends React.Component {
                     //let { Task, Deadline, Status } = task //destructuring
                     //alert(Task)
                     task['status'] = (task['status'] == 'N'? 'Pending':'Completed')
-                    return ( <
-                        tr key = {
-                            index
-                        } >
-                        <
-                        td > {
-                            task['post']
-                        } < /td>
-                       <
-                        td > {
-                            task['status']
-                        } < /td>
+                    return ( <tr key = {  index } >
+                        <td > {task['post']} </td>
+                       <td > {task['status']} < /td>
                       <td> {
                             task['deadline']
                         } < /td>
@@ -149,7 +141,7 @@ class Mytasks extends React.Component {
                         onHide = {
                           this.toggleModal
                         } >
-                        <ModalHeader closeButton >
+                                                 <ModalHeader closeButton >
                         <ModalTitle > Description < /ModalTitle>
                         </ModalHeader>
                         <ModalBody> {

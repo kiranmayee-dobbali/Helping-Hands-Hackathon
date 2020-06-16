@@ -15,7 +15,6 @@ import  Mytasks  from "./components/Mytasks";
 import Askhelp from './components/Askhelp'
 import Settings from './components/Settings'
 import Signout from './components/Signout'
-<<<<<<< HEAD
 import {useState, useEffect} from 'react';
 import { useHistory} from 'react-router';
 import Feedmain from './components/Feedmain';
@@ -23,10 +22,7 @@ import ProtectedRoute from './components/protectedRoute';
 import Login from './components/Login';
 import {browserHistory} from 'react-router-dom'
 import Forgotpassword from './components/Forgotpassword';
-=======
 import Profile from "./components/Profile";
-import logo from './logo.svg';
->>>>>>> master
 
 function App(props) {
   //const [loggedInStatus, setLoginStatus] = useState("NOT_LOGGED_IN");
@@ -69,7 +65,6 @@ function App(props) {
         <div className="auth-inner">
           <Switch>
             <Route exact path="/" component={SignIn} />
-<<<<<<< HEAD
             <Route exact path="/signin"
               render ={ props =>(
                 <Login {...props}  handleSuccessfulAuth={handleSuccessfulAuth}/>
@@ -79,7 +74,6 @@ function App(props) {
             
             
             
-            <Route exact path="/SignUp" strict component={SignUp} />
             <Route exact path="/forgotpassword" strict component={Forgotpassword} />
 
             <Route exact path='/Feed'
@@ -107,14 +101,10 @@ function App(props) {
             />
  
 
-=======
-            <Route exact path="/Signin" component={SignIn} />
             <Route exact path="/SignUp"><SignUp/></Route>
-            <Route exact path="/Mainpage" strict component={Mainpage} />
             <Route exact path="/Mainpage2" strict component={Mainpage2} />
             <Route exact path="/Mytasks" strict component={Mytasks} />
             <Route exact path="/Profile" strict component={Profile} />
->>>>>>> master
           </Switch>
         </div>
       </div>

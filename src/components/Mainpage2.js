@@ -27,15 +27,12 @@ import Askhelp from './Askhelp'
 import Settings from './Settings'
 import Signout from './Signout'
 import Feed  from "./Feed";
-<<<<<<< HEAD
 import Feedmain from './Feedmain';
 import App from "../App";
 
 
 
-=======
 import Profile from "./Profile";
->>>>>>> master
 //const Mytasks = lazy(() => import('./Mytasks'))
 import Mytasks from "./Mytasks"
 

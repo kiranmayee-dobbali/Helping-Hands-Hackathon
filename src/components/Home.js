@@ -8,18 +8,13 @@ import {useState, useEffect} from 'react';
 
 
  function Home (props){
-    function handleSuccessfulAuth(){
-    
-        console.log("wow");
-         //props.history.push("/Mainpage2");
-        // <Redirect to="/Mainpage2"/>
-      }
+
     return(
     <div>
-        <Signin handleSuccessfulAuth={handleSuccessfulAuth}/>
+        <Signin/>
     </div>
     
     )
 }
 
-export default withRouter(Home);
+export default (Home);
