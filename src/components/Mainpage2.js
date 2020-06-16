@@ -22,15 +22,20 @@ import ListAltOutlinedIcon from '@material-ui/icons/ListAltOutlined';
 import AssignmentTurnedInOutlinedIcon from '@material-ui/icons/AssignmentTurnedInOutlined';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
+import PersonIcon from '@material-ui/icons/Person';
 import Askhelp from './Askhelp'
 import Settings from './Settings'
 import Signout from './Signout'
 import Feed  from "./Feed";
+<<<<<<< HEAD
 import Feedmain from './Feedmain';
 import App from "../App";
 
 
 
+=======
+import Profile from "./Profile";
+>>>>>>> master
 //const Mytasks = lazy(() => import('./Mytasks'))
 import Mytasks from "./Mytasks"
 
@@ -123,12 +128,11 @@ else{
               </ListItem>
               </Link>
 
+              <Link to="/Profile" className={classes.link}>
 
-              <Link to="/Settings" className={classes.link}>
-
-              <ListItem button key={"settings"}>
-                <ListItemIcon><AccountCircleOutlinedIcon /></ListItemIcon>
-                <ListItemText primary={"settings"} />
+              <ListItem button key={"Profile"}>
+                <ListItemIcon><PersonIcon /></ListItemIcon>
+                <ListItemText primary={"Profile"} />
               </ListItem>
               </Link>
 
@@ -161,6 +165,10 @@ else{
           
           />
          
+
+          <Route exact path="/Profile">
+         <Profile></Profile>
+          </Route>
 
           <Route exact path="/Settings">
          <Settings></Settings>
