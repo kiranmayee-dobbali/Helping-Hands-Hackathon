@@ -71,21 +71,55 @@ class Feedmain extends Component {
     // Catch any errors we hit and update the app
     .catch(error => this.setState({ error, isLoading: false })
     );
+
+    
   }
 
+  removePerson(post_id) {
+  
+    console.log("came back to feedmain", post_id);
+    fetch("http://localhost:5000/volunteering", {
+      method:"POST",
+      mode: "cors",
+      cache: "no-cache",
+      headers:{
+          "content_type":"application/json",
 
+      },
+      body:JSON.stringify({"post_id":post_id,"emailid":this.emailid})
+      
+      }
+  ).then(response => response.text()).then(result =>  {
+    console.log(result);
+    if (result=="Valid") {    
+      //props.handleSuccessfulAuth(finalresult);}      
+     console.log("vonteer assigned to task");
+      
+     }
+      else{
+        console.log("INVALID - volunteer not assigned to task");
+        
+      }
+       })
+       
+       this.setState({ posts: this.state.posts.filter(person => person.post_id !== post_id)});
+
+  }
+  
 render(){
 
    
     console.log("posts in render", this.state.posts);
-    console.log("persomns",this.state.people);
     
     this.emailid = this.props.email;
-    console.log("email from mainpage", this.emailid);
+    console.log("email from mainpage in feedmain", this.emailid);
     
+
+
+
     let peopleCards = this.state.posts.map(person => {
         return (
-            <Feed key={person.post_id} person={person} />
+            <Feed key={person.post_id} person={person} userEmail={this.emailid} removePerson={this.removePerson.bind(this)} />
         )
       })
  

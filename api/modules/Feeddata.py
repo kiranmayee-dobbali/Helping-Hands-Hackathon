@@ -33,7 +33,7 @@ def feed_data():
             print(r.deadline)
             post_data.append(
                 {"post_id": r.post_id, "title": r.post_title, "description": r.post, "post_user_id": r.post_user_id,
-                 "deadline": r.deadline})
+                 "deadline": r.deadline})   
 
         print(post_data)
         print("data", jsonify({'posts': post_data}))

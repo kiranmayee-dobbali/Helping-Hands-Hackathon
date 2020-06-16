@@ -62,6 +62,7 @@ export default function Askhelp(props){
 
     const handleSubmit=(e)=>{
       e.preventDefault();
+      alert("Your task is submitted");
       console.log("submitted");
       console.log("submit ",title,postDescription,email);
       
@@ -85,14 +86,18 @@ export default function Askhelp(props){
           
         }
          })
+         
+         setTitle("");
+         setPostDescription("");
+         setSelectedDate(new Date(currdate));
 
     }
 
 
 
     const classes = useStyles();
-    const [title,setTitle] = useState(null); 
-    const [postDescription, setPostDescription] = useState(null);
+    const [title,setTitle] = useState(""); 
+    const [postDescription, setPostDescription] = useState("");
     const email = props.email;
     console.log("data passed",props.email);
     
@@ -117,10 +122,10 @@ return(
       Fill the details below
     </Typography>
     <Grid >
-    <TextField id="title" name="title" label="Title" variant="outlined" onChange={handleTextChange}/>
+    <TextField   id="title" name="title" value={title} label="Title" variant="outlined" onChange={handleTextChange}/>
     </Grid>
     <Grid>
-    <TextField id="description" name="description"  label="Description" variant="outlined"   multiline
+    <TextField  type="reset" id="description" value={postDescription} name="description"  label="Description" variant="outlined"   multiline
     rows={10}
     rowsMax={10}
     fullWidth

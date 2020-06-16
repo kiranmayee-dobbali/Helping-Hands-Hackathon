@@ -1,7 +1,7 @@
 import React from 'react';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import {   BrowserRouter as Router,Route, Switch, Link ,withRouter,Redirect} from "react-router-dom";
+import {   BrowserRouter as Router,Route, Switch, Link ,withRouter,Redirect, BrowserRouter} from "react-router-dom";
 import 'mdbreact/dist/css/mdb.css'; 
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-css-only/css/bootstrap.min.css'; 
@@ -17,27 +17,45 @@ import Signout from './components/Signout'
 import {useState, useEffect} from 'react';
 import { useHistory} from 'react-router';
 import Feedmain from './components/Feedmain';
-
+import ProtectedRoute from './components/protectedRoute';
+import Login from './components/Login';
+import {browserHistory} from 'react-router-dom'
+import Forgotpassword from './components/Forgotpassword';
 
 function App(props) {
-  const [loggedInStatus, setLoginStatus] = useState("NOT_LOGGED_IN");
+  //const [loggedInStatus, setLoginStatus] = useState("NOT_LOGGED_IN");
   let userEmail = null; 
+  let loggedInStatus="NOT_LOGGED_IN";
   const history2 = useHistory()
 
   function handleSuccessfulAuth(data){
     console.log("data email-->", data);
     userEmail = data;
-    console.log("emailid is----->",userEmail);
+    loggedInStatus="LOGGED_IN";
+    if(loggedInStatus=="LOGGED_IN"){
+      console.log("emailid is----->",userEmail);
+      props.history.push(
+        {pathname:"/Mainpage2",
+        state:{userEmail}
+        });
+     
+      console.log("state",userEmail)
+      history2.go()
+    
+    }
+    else{
+      console.log("NOT LOGGED IN");
+      
+    }
 
-    props.history.push(
-    {pathname:"/Mainpage2",
-    state:{userEmail}
-    });
-    history2.go()
+
   }
-
-
-
+  // loggedInStatus="NOT_LOGGED_IN";
+  console.log("login status", loggedInStatus);
+//   if(loggedInStatus=="NOT_LOGGED_IN")
+// {
+//   props.history.push('/signin');
+// }
   return (
   <Router >
     <div className="App">
@@ -46,13 +64,24 @@ function App(props) {
           <Switch>
             <Route exact path="/" component={SignIn} />
             <Route exact path="/signin"
-            render ={ props =>(
-              <SignIn {...props}   logInStatus = {loggedInStatus} handleSuccessfulAuth={handleSuccessfulAuth} />
-            )
-            }
-            />
+              render ={ props =>(
+                <Login {...props}  handleSuccessfulAuth={handleSuccessfulAuth}/>
+              )
+              }
+              />                
+            
+            
+            
             <Route exact path="/SignUp" strict component={SignUp} />
-            <Route exact path='/Feed' strict component={Feed}/>
+            <Route exact path="/forgotpassword" strict component={Forgotpassword} />
+
+            <Route exact path='/Feed'
+                render ={ props =>(
+                <Feed {...props}  userEmail={userEmail}/>
+              )
+            }        
+                    
+            />
             <Route exact path='/Feedmain' strict component={Feedmain}/>
 
             <Route exact path='/Askhelp' 
@@ -65,7 +94,7 @@ function App(props) {
 
             <Route exact path="/Mainpage2"
             render ={ props =>(
-              <Mainpage2 {...props}  logInStatus = {loggedInStatus}/>
+              <Mainpage2 {...props}  userEmail={userEmail}/>
             )
           }        
             />

@@ -23,9 +23,9 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 
-// import helpinghands from '../static/helping-hands.jpg';
+import bunny from '../static/bunny.svg';
 // src={helpinghands}
-
+import logo from '../static/logo.svg';
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -35,6 +35,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    
+  
   },
   paper: {
     padding: theme.spacing(2),
@@ -57,28 +59,22 @@ const useStyles = makeStyles((theme) => ({
 export default function Feed(props){
 
   const classes = useStyles();
- let { id,title,description, post_user_id,deadline } = props.person;
+ let { post_id,title,description, post_user_id,deadline } = props.person;
 //  let {id,title,location,description}= props.person;
-  console.log("got valus",title,description);
-
-
+  console.log("got valus",post_id,title,description);
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
-  function updateVolunteerid(){
-      //nothin
-  }
 
   const handleClose = (e,value) => {   
     setOpen(false);
     if(value=="yes"){
       //add to my tasks
-      updateVolunteerid();
-      console.log(value);
-      
+      console.log(value,"id",{post_id});
+      props.removePerson(post_id);
     }    
   };
 
@@ -86,7 +82,7 @@ export default function Feed(props){
   
   return(
 
-    <Container>  
+    <Container pl={110}>  
     <Toolbar>
     </Toolbar>
 
@@ -95,7 +91,7 @@ export default function Feed(props){
         <Grid container spacing={1}>
           <Grid item>
             <ButtonBase className={classes.image}>
-              <img className={classes.img} alt="complex"/>
+              <img className={classes.img} alt="complex" src={ require('../static/bunny.jpg') }/>
             </ButtonBase>
           </Grid>
           <Grid item xs={12} sm container>

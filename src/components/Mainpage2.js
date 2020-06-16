@@ -27,6 +27,9 @@ import Settings from './Settings'
 import Signout from './Signout'
 import Feed  from "./Feed";
 import Feedmain from './Feedmain';
+import App from "../App";
+
+
 
 //const Mytasks = lazy(() => import('./Mytasks'))
 import Mytasks from "./Mytasks"
@@ -63,11 +66,19 @@ const useStyles = makeStyles((theme) => ({
 
 function Mainpage2(props) {
   const classes = useStyles();
-  const emailid = props.location.state;
-  // console.log("email id passedon ",emailid['userEmail']);
-  const email = emailid['userEmail'];
-  console.log("email id passedon ",email);  
-
+  let email = null;
+  if(props.location.state!=null){
+    const emailid = props.location.state;
+    email = emailid['userEmail'];
+    console.log("email id passedon ",email);  
+  } 
+else{
+   email = props.userEmail;
+  console.log("email id passedon ",props.userEmail);  
+}
+  console.log("log status",);
+  
+// 
   return (
     <Router>
       <div className={classes.root}>
@@ -75,7 +86,7 @@ function Mainpage2(props) {
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" noWrap>
-            Permanent drawer
+            Helping Hands
           </Typography>
         </Toolbar>
       </AppBar>
@@ -89,7 +100,7 @@ function Mainpage2(props) {
         <div className={classes.drawerContainer}>
           <List>
 
-              <Link to='/Feedmain' className={classes.link}>
+              <Link to='/Mainpage2' className={classes.link}>
               <ListItem button key={"Feed"} >
                 <ListItemIcon><ListAltOutlinedIcon /> </ListItemIcon>
                 <ListItemText primary={"Feed"} />
@@ -136,7 +147,7 @@ function Mainpage2(props) {
         </Drawer>
 
         <Switch>
-          <Route exact path="/Feedmain"
+          <Route exact path="/Mainpage2"
           render={(props) => <Feedmain {...props} email={email} />}
           
           />

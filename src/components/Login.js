@@ -15,7 +15,7 @@ import {useState, useEffect} from 'react';
 import SignUp from './SignUp'
 import { Router,Route,NavLink,Switch,Redirect,withRouter} from 'react-router-dom'
 import Mainpage2 from "./Mainpage2";
-
+import Forgotpassword from './Forgotpassword';
 
 const emailRegex = RegExp(
     /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
@@ -175,6 +175,20 @@ const openMainpage=()=>{
       )
   };
 
+  const ForgotPassword =()=>{
+    return(
+      <Router>
+
+      <Switch>
+
+      <Route exact path="/forgotpassword" strict component={Forgotpassword} />
+      </Switch>
+
+      </Router>
+
+    )
+};
+
         let [email,setEmail ] = useState(null);
         let [password,setPassword] = useState(null);
 
@@ -251,19 +265,15 @@ const openMainpage=()=>{
                 </div>
         <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
+              <NavLink variant="body2" to="/forgotpassword" onSubmit={ForgotPassword} >
+                {"Forgot password?"}
+              </NavLink>
             </Grid>
             <Grid item>
 
               <NavLink  variant="body2" to="/SignUp" onSubmit={openLogin}>
                 {"Don't have an account? Sign Up"}
               </NavLink>
-              <NavLink  variant="body2" to="/Mainpage2" onSubmit={openMainpage}>
-                {"mainpage"}
-              </NavLink>
-
             </Grid> 
         </Grid>
        
