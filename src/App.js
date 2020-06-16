@@ -7,10 +7,12 @@ import SignUp from "./components/SignUp"
 import Mainpage from "./components/Mainpage"
 import Feed from "./components/Feed";
 import Mainpage2 from "./components/Mainpage2"
+import Example from "./components/Example"
 import  Mytasks  from "./components/Mytasks";
 import Askhelp from './components/Askhelp'
 import Settings from './components/Settings'
 import Signout from './components/Signout'
+import Profile from "./components/Profile";
 import logo from './logo.svg';
 
 
@@ -28,11 +30,13 @@ function App() {
             <Route exact path="/Mainpage" strict component={Mainpage} />
             <Route exact path="/Mainpage2" strict component={Mainpage2} />
             <Route exact path="/Mytasks" strict component={Mytasks} />
+            <Route exact path="/Profile" strict component={Profile} />
           </Switch>
         </div>
       </div>
     </div></Router>
   );
+//  return (<Example Desc="Hi how are you?"/>);
 }
 
 export default App;

@@ -18,10 +18,12 @@ import ListAltOutlinedIcon from '@material-ui/icons/ListAltOutlined';
 import AssignmentTurnedInOutlinedIcon from '@material-ui/icons/AssignmentTurnedInOutlined';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
+import PersonIcon from '@material-ui/icons/Person';
 import Askhelp from './Askhelp'
 import Settings from './Settings'
 import Signout from './Signout'
 import Feed  from "./Feed";
+import Profile from "./Profile";
 //const Mytasks = lazy(() => import('./Mytasks'))
 import Mytasks from "./Mytasks"
 
@@ -72,12 +74,11 @@ function Mainpage2() {
               </ListItem>
               </Link>
 
+              <Link to="/Profile" className={classes.link}>
 
-              <Link to="/Settings" className={classes.link}>
-
-              <ListItem button key={"settings"}>
-                <ListItemIcon><AccountCircleOutlinedIcon /></ListItemIcon>
-                <ListItemText primary={"settings"} />
+              <ListItem button key={"Profile"}>
+                <ListItemIcon><PersonIcon /></ListItemIcon>
+                <ListItemText primary={"Profile"} />
               </ListItem>
               </Link>
 
@@ -105,6 +106,10 @@ function Mainpage2() {
 
           <Route exact path="/Askhelp">
          <Askhelp></Askhelp>
+          </Route>
+
+          <Route exact path="/Profile">
+         <Profile></Profile>
           </Route>
 
           <Route exact path="/Settings">

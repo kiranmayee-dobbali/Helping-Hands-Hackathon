@@ -8,6 +8,7 @@ import '../index.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
+import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
 class SignUp extends React.Component {
 
 state = {
@@ -19,18 +20,18 @@ state = {
   email: "",
   passwrd:"",
   loc:"",
-  errors:{}
+  errors:{},
+  country: '',
+  region: ''
 };
  openLogin =()=>{
   return(
-    <Router>
 
-    <Switch>
-
-    <Route exact path="/Login" strict component={Login} />
-    </Switch>
-
-    </Router>
+<Router>
+	<Switch>
+		<Route exact path="/Login" strict component={Login} />
+	</Switch>
+</Router>
 
   )
 };
@@ -38,6 +39,16 @@ changeHandler = event => {
 
     this.setState({ [event.target.name]: event.target.value });
   };
+
+  selectCountry = (val)=>{
+
+    this.setState({ country: val });
+  }
+
+  selectRegion = (val)=>{
+
+    this.setState({ region: val });
+  }
 
 handleOptionChange = event =>{
 
@@ -48,16 +59,47 @@ handleOptionChange = event =>{
 
 submituserRegistrationForm= event => {
       event.preventDefault();
+      let fd = new FormData();
       if (this.validateForm()) {
-        this.setState({ fname:"" });
-        this.setState({ lname:"" });
-        this.setState({ bday:"" });
-        this.setState({ gender:"Male" });
-        this.setState({ phone:"" });
-        this.setState({ email:"" });
-        this.setState({ passwrd:"" });
-        this.setState({ loc:"" });
-          alert("Form submitted");
+
+        fd.append('fname',this.state.fname);
+        fd.append('lname',this.state.lname);
+        fd.append('bday',this.state.bday);
+        fd.append('gender',this.state.gender);
+        fd.append('phone',this.state.phone);
+        fd.append('email',this.state.email);
+        fd.append('passwrd',this.state.passwrd);
+        fd.append('loc',this.state.loc);
+        fd.append('country',this.state.country);
+        fd.append('state',this.state.region);
+
+        fetch('/registration', {
+        method:'POST',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        body:fd
+        }
+    ).then(response=>response.text()).
+    then((final) => {
+    if (final === 'Success')
+    {
+    this.setState({ fname:"" });
+    this.setState({ lname:"" });
+    this.setState({ bday:"" });
+    this.setState({ gender:"Male" });
+    this.setState({ phone:"" });
+    this.setState({ email:"" });
+    this.setState({ passwrd:"" });
+    this.setState({ loc:"" });
+    this.setState({ country:"" });
+    this.setState({ state:"" });
+      alert("Form submitted");
+    }
+    else {
+      alert(final)
+    }
+  })
       }
     };
 
@@ -130,10 +172,12 @@ componentDidMount() {
 var dd = today.getDate();
 var mm = today.getMonth()+1; //January is 0!
 var yyyy = today.getFullYear();
- if(dd<10){
+ if(dd
+<10){
         dd='0'+dd
     }
-    if(mm<10){
+    if(mm
+	<10){
         mm='0'+mm
     }
 
@@ -145,20 +189,21 @@ render()
 {
   return (
 
-    <MDBContainer>
-      <MDBRow className='flex-center'>
-        <MDBCol md="5">
-          <MDBCard>
-            <MDBCardBody>
-              <form onSubmit={this.submituserRegistrationForm}>
-                <p className="h4 text-center py-4">Registration</p>
-                <label
+
+		<MDBContainer>
+			<MDBRow className='flex-center'>
+				<MDBCol md="5">
+					<MDBCard>
+						<MDBCardBody>
+							<form onSubmit={this.submituserRegistrationForm}>
+								<p className="h4 text-center py-4">Registration</p>
+								<label
                   htmlFor="defaultFormCardNameEx"
                   className="black-text font-weight-light"
                 >
                   Your First name
                 </label>
-                <input
+								<input
                   value = {this.state.fname}
                   type="text"
                   id="defaultFormCardNameEx"
@@ -167,15 +212,15 @@ render()
                   name = "fname"
                   required
                 />
-                <div className="errorMsg">{this.state.errors.fname}</div>
-                <br />
-                <label
+								<div className="errorMsg">{this.state.errors.fname}</div>
+								<br />
+								<label
                   htmlFor="defaultFormCardNameEx"
                   className="black-text font-weight-light"
                 >
                   Your Last name
                 </label>
-                <input
+								<input
                   type="text"
                   value = {this.state.lname}
                   id="defaultFormCardNameEx"
@@ -184,15 +229,15 @@ render()
                   name = "lname"
                   required
                 />
-                <div className="errorMsg">{this.state.errors.lname}</div>
-                <br />
-                <label
+								<div className="errorMsg">{this.state.errors.lname}</div>
+								<br />
+								<label
                   htmlFor="defaultFormCardNameEx"
                   className="black-text font-weight-light"
                 >
                   Your Birthday
                 </label>
-                <input
+								<input
                   type="date"
                   value = {this.state.bday}
                   id="defaultFormCardDate"
@@ -202,34 +247,31 @@ render()
                   onChange={this.changeHandler}
                   required
                 />
-                <br />
-                <label
+								<br />
+								<label
                   htmlFor="defaultFormCardNameEx"
                   className="black-text font-weight-light"
                 >
                   Your Gender
                 </label>
-                <div className="custom-control custom-radio">
-                <input type="radio" className="custom-control-input"   value="Female" id= "defaultUnchecked" checked={this.state.gender === "Female"}
+								<div className="custom-control custom-radio">
+									<input type="radio" className="custom-control-input"   value="Female" id= "defaultUnchecked" checked={this.state.gender === "Female"}
                           onChange={this.handleOptionChange}  />
-                 <label className=" custom-control-label" htmlFor="defaultUnchecked">Female</label>
-                 </div>
-                <div className="custom-control custom-radio">
-                <input type="radio" className="custom-control-input"  value = "Male" id="defaultchecked" checked={this.state.gender === "Male"}
+									<label className=" custom-control-label" htmlFor="defaultUnchecked">Female</label>
+								</div>
+								<div className="custom-control custom-radio">
+									<input type="radio" className="custom-control-input"  value = "Male" id="defaultchecked" checked={this.state.gender === "Male"}
                         onChange={this.handleOptionChange}  />
-                 <label className=" custom-control-label" htmlFor="defaultchecked" >Male</label>
-                 </div>
-
-
-
-                <br/>
-                <label
+									<label className=" custom-control-label" htmlFor="defaultchecked" >Male</label>
+								</div>
+								<br/>
+								<label
                   htmlFor="defaultFormCardNameEx"
                   className="black-text font-weight-light"
                 >
                   Your Phone Number
                 </label>
-                <input
+								<input
                   type="text"
                   value = {this.state.phone}
                   id="defaultFormCardNameEx"
@@ -240,15 +282,15 @@ render()
                   minLength="10"
                   required
                 />
-                <div className="errorMsg">{this.state.errors.phone}</div>
-                <br />
-                <label
+								<div className="errorMsg">{this.state.errors.phone}</div>
+								<br />
+								<label
                   htmlFor="defaultFormCardNameEx"
                   className="black-text font-weight-light"
                 >
                   Your Email
                 </label>
-                <input
+								<input
                   type="text"
                   value = {this.state.email}
                   id="defaultFormCardNameEx"
@@ -257,15 +299,15 @@ render()
                   onChange={this.changeHandler}
                   required
                 />
-                <div className="errorMsg">{this.state.errors.email}</div>
-                <br />
-                <label
+								<div className="errorMsg">{this.state.errors.email}</div>
+								<br />
+								<label
                   htmlFor="defaultFormCardEmailEx"
                   className="black-text font-weight-light"
                 >
                   Your Password
                 </label>
-                <input
+								<input
                   value = {this.state.passwrd}
                   type="password"
                   id="defaultFormCardEmailEx"
@@ -275,15 +317,38 @@ name = "passwrd"
 onChange={this.changeHandler}
 required
                 />
-                <div className="errorMsg">{this.state.errors.passwrd}</div>
-                <br/>
-                <label
+								<div className="errorMsg">{this.state.errors.passwrd}</div>
+								<br/>
+								<label
+                  htmlFor="defaultFormCardNameEx"
+                  className="black-text font-weight-light"
+                >
+                  Your Country
+                </label>
+								<CountryDropdown
+                className="form-control"
+          value={this.state.country}
+          onChange={(val) => this.selectCountry(val)} required />
+								<br />
+								<label
+            htmlFor="defaultFormCardNameEx"
+            className="black-text font-weight-light"
+          >
+            Your State
+          </label>
+								<RegionDropdown
+          className="form-control"
+          country={this.state.country}
+          value={this.state.region}
+          onChange={(val) => this.selectRegion(val)} required />
+								<br />
+								<label
                   htmlFor="defaultFormCardNameEx"
                   className="black-text font-weight-light"
                 >
                   Your Location
                 </label>
-                <input
+								<input
                   type="text"
                   value = {this.state.loc}
                   id="defaultFormCardNameEx"
@@ -292,23 +357,20 @@ required
                   onChange={this.changeHandler}
                   required
                 />
-                <div className="errorMsg">{this.state.errors.loc}</div>
-                <br />
-                <div className="text-center py-4 mt-3">
-                  <MDBBtn color="primary" type="submit">Register</MDBBtn>
-                </div>
-                <NavLink  variant="body2" to="/Signin" onSubmit={this.openLogin}>
+								<div className="errorMsg">{this.state.errors.loc}</div>
+								<br />
+								<div className="text-center py-4 mt-3">
+									<MDBBtn color="primary" type="submit">Register</MDBBtn>
+								</div>
+								<NavLink  variant="body2" to="/Signin" onSubmit={this.openLogin}>
                 {"Already have an account? Sign in"}
               </NavLink>
-              </form>
-
-
-
-            </MDBCardBody>
-          </MDBCard>
-        </MDBCol>
-      </MDBRow>
-    </MDBContainer>
+							</form>
+						</MDBCardBody>
+					</MDBCard>
+				</MDBCol>
+			</MDBRow>
+		</MDBContainer>
   );
 };
 };
