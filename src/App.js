@@ -1,11 +1,10 @@
 import React from 'react';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
+//import './App.css';
 import {   BrowserRouter as Router,Route, Switch, Link ,withRouter,Redirect, BrowserRouter} from "react-router-dom";
-import 'mdbreact/dist/css/mdb.css'; 
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import 'bootstrap-css-only/css/bootstrap.min.css'; 
-import Home from './components/Home';
+//import '@fortawesome/fontawesome-free/css/all.min.css';
+//import 'bootstrap-css-only/css/bootstrap.min.css';
+//import Home from './components/Home';
 import SignIn from './components/Login'
 import SignUp from "./components/SignUp"
 import Feed from "./components/Feed";
@@ -26,7 +25,7 @@ import Profile from "./components/Profile";
 
 function App(props) {
   //const [loggedInStatus, setLoginStatus] = useState("NOT_LOGGED_IN");
-  let userEmail = null; 
+  let userEmail = null;
   let loggedInStatus="NOT_LOGGED_IN";
   const history2 = useHistory()
 
@@ -40,14 +39,14 @@ function App(props) {
         {pathname:"/Mainpage2",
         state:{userEmail}
         });
-     
+
       console.log("state",userEmail)
       history2.go()
-    
+
     }
     else{
       console.log("NOT LOGGED IN");
-      
+
     }
 
 
@@ -70,36 +69,36 @@ function App(props) {
                 <Login {...props}  handleSuccessfulAuth={handleSuccessfulAuth}/>
               )
               }
-              />                
-            
-            
-            
+              />
+
+
+
             <Route exact path="/forgotpassword" strict component={Forgotpassword} />
 
             <Route exact path='/Feed'
                 render ={ props =>(
                 <Feed {...props}  userEmail={userEmail}/>
               )
-            }        
-                    
+            }
+
             />
             <Route exact path='/Feedmain' strict component={Feedmain}/>
 
-            <Route exact path='/Askhelp' 
+            <Route exact path='/Askhelp'
              render ={ props =>(
               <Askhelp {...props}  userEmail={userEmail}/>
             )
-          }        
-                      
+          }
+
             />
 
             <Route exact path="/Mainpage2"
             render ={ props =>(
               <Mainpage2 {...props}  userEmail={userEmail}/>
             )
-          }        
+          }
             />
- 
+
 
             <Route exact path="/SignUp"><SignUp/></Route>
             <Route exact path="/Mainpage2" strict component={Mainpage2} />
