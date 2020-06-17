@@ -84,6 +84,7 @@ function SignIn(props) {
       `);
     } else {
       console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+      alert("Invalid login details");
     }
     fetch("/hello", {
       method:"POST",
@@ -200,11 +201,12 @@ const openMainpage=()=>{
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <div className={classes.paper}>
+
                     <Avatar className={classes.avatar}>
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Sign in! Status :{props.logInStatus}  
+                        Sign in!   
                         
                     </Typography>
 

@@ -1,206 +1,179 @@
-
-
-
-import React, { Component } from 'react'
-import { Formik } from 'formik'
-import { object, ref, string } from 'yup'
-import Input from '@material-ui/core/Input'
-import InputLabel from '@material-ui/core/InputLabel'
-import FormControl from '@material-ui/core/FormControl'
-import FormHelperText from '@material-ui/core/FormHelperText'
-import Button from '@material-ui/core/Button'
-import Paper from '@material-ui/core/Paper'
-
-import Spinner from './Spinner'
-import Alert from './Alert'
+import React from 'react';
+import Paper from '@material-ui/core/Paper';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import Toolbar from '@material-ui/core/Toolbar';
+import {useState, useEffect} from 'react';
+import Container from '@material-ui/core/Container';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+import { NavLink} from 'react-router-dom'
 
- class Forgotpassword extends Component {
-  state = {
-    passChangeSuccess: false,
+
+
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Slide from '@material-ui/core/Slide';
+
+import Login from './Login'
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  });
+  
+
+const styles = makeStyles((theme) => ({
+
+  '@global': {
+      body: {
+          backgroundColor: theme.palette.common.white,
+      },
+  },
+  paper: {
+      marginTop: theme.spacing(8),
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+  },
+  avatar: {
+      margin: theme.spacing(1),
+      backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+      width: '100%', // Fix IE 11 issue.
+      marginTop: theme.spacing(1),
+  },
+  submit: {
+      margin: theme.spacing(3, 0, 2),
+  },
+}));
+
+
+ function Forgotpassword(props){
+  const classes = styles();
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleChange =(e, value)=>{
+      //
   }
+  const handleClose = (e,value) => {   
+    setOpen(false);
+    if(value=="yes"){
+      //add to my tasks
+      console.log("yes");
+      
+    }    
+  };
 
-  _handleModalClose = () => {
-    this.setState(() => ({
-      passChangeSuccess: false,
-    }))
+  const handleSubmit =(e)=>{
+    e.preventDefault();
+
   }
+  return(
+    <Container component="main" maxWidth="xs">
+    <CssBaseline />
+    <div className={classes.paper}>
 
-  _renderModal = () => {
-    const onClick = () => {
-      this.setState(() => ({ passChangeSuccess: false }))
-    }
+        <Typography component="h1" variant="h5">
+            Reset Password
+        </Typography>
 
-    return (
-      <Alert
-        isOpen={this.state.passChangeSuccess}
-        onClose={this._handleClose}
-        handleSubmit={onClick}
-        title="Password Reset"
-        text="Your password was changed successfully"
-        submitButtonText="Done"
-      />
-    )
-  }
+        <form className={classes.form} onSubmit={handleSubmit} noValidate>
+                    <div className="currentpassword">
 
-  _handleSubmit = ({
-    currentPass,
-    newPass,
-    confirmPass,
-    setSubmitting,
-    resetForm,
-  }) => {
-    // fake async login
-    setTimeout(async () => {
-      setSubmitting(false)
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="currentpassword"
+                            label="Current Password"
+                            name="cpwd"
+                            autoComplete="currentpassword"
+                            autoFocus
+                            // onChange={handleChange}
+                        />
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="newpassword"
+                            label="New Password"
+                            name="npassword"
+                            autoComplete="newpassword"
+                            autoFocus
+                            onChange={handleChange}
+                        />
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="confirmpassword"
+                            label="Confirm Password"
+                            name="confirmpassword"
+                            autoComplete="confirmpassword"
+                            autoFocus
+                            // onChange={handleChange}
+                        />
 
-      this.setState(() => ({
-        passChangeSuccess: true,
-      }))
-
-      resetForm()
-    }, 1000)
-  }
-
-  render() {
-    return (
-      <Formik
-        initialValues={{
-          currentPass: '',
-          newPass: '',
-          confirmPass: '',
-        }}
-        validationSchema={object().shape({
-          currentPass: string().required('Current password is required'),
-          newPass: string().required('New password is required'),
-          confirmPass: string()
-            .oneOf([ref('newPass')], 'Passwords do not match')
-            .required('Password is required'),
-        })}
-        onSubmit={(
-          { currentPass, newPass, confirmPass },
-          { setSubmitting, resetForm }
-        ) =>
-          this._handleSubmit({
-            currentPass,
-            newPass,
-            confirmPass,
-            setSubmitting,
-            resetForm,
-          })
-        }
-        render={props => {
-          const {
-            values,
-            touched,
-            errors,
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            isValid,
-            isSubmitting,
-          } = props
-          return isSubmitting ? (
-            <Spinner />
-          ) : (
-          
-            <Paper className="form form--wrapper" elevation={10}>
-              <form className="form" onSubmit={handleSubmit}>
-                <FormControl fullWidth margin="dense">
-                  <InputLabel
-                    htmlFor="password-current"
-                    error={Boolean(touched.currentPass && errors.currentPass)}
-                  >
-                    {'Current Password'}
-                  </InputLabel>
-                  <Input
-                    id="password-current"
-                    name="currentPass"
-                    type="password"
-                    value={values.currentPass}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    error={Boolean(touched.currentPass && errors.currentPass)}
-                  />
-                  <FormHelperText
-                    error={Boolean(touched.currentPass && errors.currentPass)}
-                  >
-                    {touched.currentPass && errors.currentPass
-                      ? errors.currentPass
-                      : ''}
-                  </FormHelperText>
-                </FormControl>
-                <FormControl
-                  fullWidth
-                  margin="dense"
-                  error={Boolean(touched.newPass && errors.newPass)}
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                            onClick={handleClickOpen}
+                        >
+                            Reset Password
+                         </Button>
+            <Dialog
+                  open={open}
+                  TransitionComponent={Transition}
+                  keepMounted
+                  onClose={handleClose}
+                  aria-labelledby="alert-dialog-slide-title"
+                  aria-describedby="alert-dialog-slide-description"
                 >
-                  <InputLabel
-                    htmlFor="password-new"
-                    error={Boolean(touched.newPass && errors.newPass)}
-                  >
-                    {'New Password'}
-                  </InputLabel>
-                  <Input
-                    id="password-new"
-                    name="newPass"
-                    type="password"
-                    value={values.newPass}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    error={Boolean(touched.newPass && errors.newPass)}
-                  />
-                  <FormHelperText
-                    error={Boolean(touched.newPass && errors.newPass)}
-                  >
-                    {touched.newPass && errors.newPass ? errors.newPass : ''}
-                  </FormHelperText>
-                </FormControl>
-                <FormControl
-                  fullWidth
-                  margin="dense"
-                  error={Boolean(touched.confirmPass && errors.confirmPass)}
-                >
-                  <InputLabel
-                    htmlFor="password-confirm"
-                    error={Boolean(touched.confirmPass && errors.confirmPass)}
-                  >
-                    {'Confirm Password'}
-                  </InputLabel>
-                  <Input
-                    id="password-confirm"
-                    name="confirmPass"
-                    type="password"
-                    value={values.confirmPass}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    error={Boolean(touched.confirmPass && errors.confirmPass)}
-                  />
-                  <FormHelperText
-                    error={Boolean(touched.confirmPass && errors.confirmPass)}
-                  >
-                    {touched.confirmPass && errors.confirmPass
-                      ? errors.confirmPass
-                      : ''}
-                  </FormHelperText>
-                </FormControl>
-                <Button
-                  type="submit"
-                  variant="outlined"
-                  color="primary"
-                  disabled={Boolean(!isValid || isSubmitting)}
-                  style={{ margin: '16px' }}
-                >
-                  {'Reset Password'}
-                </Button>
-              </form>
-              {this._renderModal()}
-            </Paper>
-          )
-        }}
-      />
-    )
-  }
-}
+                <DialogTitle id="alert-dialog-slide-title">{"Reset Password"}</DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-slide-description">
+                    You have successfully set your new Password.
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={(e) => {handleClose(e, "yes")}} color="primary">
+                    Ok
+                    </Button>
+                </DialogActions>
+            </Dialog>
+            <Grid container>
+                <Grid item xs>
+                <NavLink variant="body2" to="/signin" onSubmit={Login} >
+                    {"Open Signin page"}
+                </NavLink>
+                </Grid>
+            </Grid>
+            </div>
+        </form>
 
-export default Forgotpassword;
+    </div>
+
+    </Container>
+  );
+ }
+  
+ export default Forgotpassword;
+
+

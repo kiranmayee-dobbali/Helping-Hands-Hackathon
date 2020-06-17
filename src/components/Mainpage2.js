@@ -29,7 +29,7 @@ import Signout from './Signout'
 import Feed  from "./Feed";
 import Feedmain from './Feedmain';
 import App from "../App";
-
+import Login from './Login';
 
 
 import Profile from "./Profile";
@@ -134,7 +134,7 @@ else{
               </Link>
 
 
-              <Link to="/Signout" className={classes.link}>
+              <Link to="/signin" className={classes.link}>
 
               <ListItem button key={"Sign out"}>
                 <ListItemIcon><ExitToAppOutlinedIcon /></ListItemIcon>
@@ -143,6 +143,7 @@ else{
               </Link>
 
           </List>
+          
       
         </div>
         </Drawer>
@@ -171,8 +172,8 @@ else{
          <Settings></Settings>
           </Route>
 
-          <Route exact path="/Signout">
-         <Signout></Signout>
+          <Route exact path="/signin">
+         <Login></Login>
           </Route>
 
         </Switch>

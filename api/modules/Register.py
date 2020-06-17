@@ -39,7 +39,7 @@ def register():
             cntry = request.form['country']
             stat = request.form['state']
             # Check if account exists using MySQL
-            con = psycopg2.connect(dbname="communityproject", user="postgres", password="")
+            con = psycopg2.connect(dbname="communityproject", user="postgres", password="dbpassword")
             cur = con.cursor()
             cur.execute('SELECT COUNT(*) FROM Users WHERE EmailId = %s',(email,))
             account = cur.fetchone()
@@ -114,7 +114,7 @@ def UpdateStatus():
             stats = request.form['status']
             rowid = request.form['id']
             print(stats,rowid)
-            con = psycopg2.connect(dbname="communityproject", user="postgres", password="")
+            con = psycopg2.connect(dbname="communityproject", user="postgres", password="dbpassword")
             cur = con.cursor()
             cur.execute("UPDATE POSTS SET status ='" + stats + "' WHERE POST_ID = "+ rowid + ";")
             cur.close()
@@ -128,7 +128,7 @@ def showProfile():
         if 'id' in request.form:
             user_id = request.form['id']
             print(user_id)
-            con = psycopg2.connect(dbname="communityproject", user="postgres", password="")
+            con = psycopg2.connect(dbname="communityproject", user="postgres", password="dbpassword")
             cur = con.cursor()
             cur.execute("SELECT firstname,lastname,birthday,emailid,phonenumber,location,country,state from USERS WHERE USER_ID ="+ user_id+" ;")
             tuples = cur.fetchall()
@@ -155,7 +155,7 @@ def updateProfile():
             cntry = request.form['country']
             stat = request.form['state']
             
-            con = psycopg2.connect(dbname="communityproject", user="postgres", password="")
+            con = psycopg2.connect(dbname="communityproject", user="postgres", password="dbpassword")
             cur = con.cursor()
             cur.execute("UPDATE USERS SET firstname ='" + fname +"', lastname ='"+lname+"' ,birthday ='"+bday+"' ,emailid ='"+email+"' , phonenumber='"+phone+"' ,location='"+loc+"' , country='"+cntry+"' , state='"+ stat+"' WHERE USER_ID = "+ user_id + ";")
             print(cur)

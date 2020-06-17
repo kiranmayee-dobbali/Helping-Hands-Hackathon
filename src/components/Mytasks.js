@@ -31,7 +31,8 @@ class Mytasks extends React.Component {
                 Tasks: [{
                     Task: 'To help buy grocery',
                     Status: 'Pending',
-                    Deadline: '6-8-2020'
+                    Deadline: '6-8-2020',
+                    Description: "",
                 }],
                 isOpen: false,
                 desc: '',
@@ -102,7 +103,7 @@ class Mytasks extends React.Component {
             
             intial['Description'] = 'D';
             //intial['Delete'] = 'C';
-            console.log(intial)
+            console.log(intial);
             return Object.keys(intial).map((key, index) => {
                     return ( <th key = { index} show = {false}> 
                     {
