@@ -1,10 +1,10 @@
 import React from 'react';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-//import './App.css';
+import './App.css';
 import {   BrowserRouter as Router,Route, Switch, Link ,withRouter,Redirect, BrowserRouter} from "react-router-dom";
-//import '@fortawesome/fontawesome-free/css/all.min.css';
-//import 'bootstrap-css-only/css/bootstrap.min.css';
-//import Home from './components/Home';
+// import '@fortawesome/fontawesome-free/css/all.min.css';
+// import 'bootstrap-css-only/css/bootstrap.min.css';
+// import Home from './components/Home';
 import SignIn from './components/Login'
 import SignUp from "./components/SignUp"
 import Feed from "./components/Feed";

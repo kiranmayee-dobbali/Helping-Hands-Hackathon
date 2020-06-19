@@ -53,6 +53,10 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '100%',
     maxHeight: '100%',
   },
+  buttons:{
+    display: "flex", justifyContent: "center", alignItems: "center"
+
+  }
 }));
 
 
@@ -110,8 +114,8 @@ export default function Feed(props){
                 </Typography>
 
               </Grid>
-              <Grid item>
-                <Button variant="contained" color="primary" onClick={handleClickOpen}>
+              <Grid item className={classes.buttons}>
+                <Button variant="contained" color="primary" onClick={handleClickOpen}  >
                   Volunteer
                 </Button>
                 <Dialog

@@ -54,7 +54,7 @@ class Mytasks extends React.Component {
            {
           if (val.toLowerCase() == "completed")
           {
-             val = 'Y'
+             val = 'C'
            }
           else if (val.toLowerCase() == "givenup") {
             val = 'N'
@@ -84,8 +84,11 @@ class Mytasks extends React.Component {
 
 
         componentDidMount() {
+            let login_user_id = localStorage.getItem("login_user_id");
+            console.log("usr id",login_user_id);
+            
             let fd = new FormData();
-            fd.append('id', '2');
+            fd.append('id', login_user_id);
 
             fetch('/Mytasks', {
                 method: 'POST',
@@ -106,7 +109,7 @@ class Mytasks extends React.Component {
 
                     return (
 
-<th key = { index} show = {false}>
+                    <th key = { index} show = {false}>
                     {
                             key.toUpperCase()
                         } </th>)
@@ -122,7 +125,7 @@ class Mytasks extends React.Component {
                   task['status'] = ((task['status'] == 'P' || task['status'] == 'Pending')? 'Pending':'New')
                     return (
 	            <tr key = {  index } >
-		            <td > {task['post_title']} </td>
+		            <td > {task['title']} </td>
 
 			        <td> {
                             task['deadline']
@@ -201,6 +204,8 @@ class Mytasks extends React.Component {
  }}> No Tasks for you. Volunteer to add tasks. </h2>)
               }
 				return(<MDBContainer>
+                    <Toolbar>
+                    </Toolbar>
                     <MDBRow  className = 'flex-center' >
                     <MDBCol md = "11" >
                     <MDBCard >

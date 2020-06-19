@@ -21,6 +21,7 @@ import ModalTitle from "react-bootstrap/ModalTitle";
 import ModalDialog from 'react-bootstrap/ModalDialog';
 import './Modal.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import Toolbar from '@material-ui/core/Toolbar';
 
 
 class Myposts extends React.Component {
@@ -44,9 +45,11 @@ class Myposts extends React.Component {
 
 
         componentDidMount() {
+            let login_user_id = localStorage.getItem("login_user_id");
+
             console.log('In mount')
             let fd = new FormData();
-            fd.append('id', '2');
+            fd.append('id', login_user_id);
 
             fetch('/Myposts', {
                 method: 'POST',
@@ -76,7 +79,7 @@ class Myposts extends React.Component {
                   task['status'] = ((task['status'] == 'P' || task['status'] == 'Pending')? 'Pending':'New')
                     return (
 	<tr key = {  index } >
-		<td > {task['post_title']} </td>
+		<td > {task['title']} </td>
     <td> {
                           task['deadline']
                       } < /td>
@@ -132,7 +135,10 @@ class Myposts extends React.Component {
         transform: 'translate(-50%, -50%)'
  }}> No Posts </h2>)
               }
-							return(<MDBContainer ><
+							return(<MDBContainer >
+                    <Toolbar>
+                    </Toolbar>
+                    <
                     MDBRow className = 'flex-center' ><
                     MDBCol md = "10" ><
                     MDBCard ><

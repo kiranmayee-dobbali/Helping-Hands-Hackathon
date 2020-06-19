@@ -57,8 +57,10 @@ class Profile extends React.Component
 
  toFetch = () =>
  {
+  let login_user_id = localStorage.getItem("login_user_id");
+
    let fd = new FormData();
-   fd.append('id', '2');
+   fd.append('id',login_user_id);
 
    fetch('/Profile', {
        method: 'POST',
@@ -95,9 +97,11 @@ class Profile extends React.Component
  }
  submituserRegistrationForm= event => {
        event.preventDefault();
+       let login_user_id = localStorage.getItem("login_user_id");
+
        let fd = new FormData();
        if (this.validateForm()) {
-         fd.append('id',2);
+         fd.append('id',login_user_id);
          fd.append('fname',this.state.Profle['fname']);
          fd.append('lname',this.state.Profle['lname']);
          fd.append('bday',this.state.Profle['bday']);
@@ -292,6 +296,7 @@ class Profile extends React.Component
                     name="email"
                     onChange={this.changeHandler}
                     required
+                    disabled
                   />
   								<div className="errorMsg">{this.state.errors.email}</div>
   								<br />

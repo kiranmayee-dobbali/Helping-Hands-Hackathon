@@ -72,7 +72,7 @@ def register():
 
 
                 #cur.execute(sql, (fname, lname, date_time_obj.date(), gender, email, int(phone), loc, t_password))
-                cur.execute("INSERT INTO Users VALUES (DEFAULT,'"+ fname +"', '" + lname +"', '"+ bday +"', '"+ gender + "', '"+ email + "', '"+ phone + "', '"+ loc +"', '" +t_password  +"', '" +cntry  +"', '" +stat  + "');")
+                cur.execute("INSERT INTO Users VALUES (DEFAULT,'"+ fname +"', '" + lname +"', '"+ bday +"', '"+ gender + "', '"+ email + "', '"+ phone + "', '"+ loc +"', '" +passwrd  +"', '" +cntry  +"', '" +stat  + "');")
                 cur.close()
                 con.commit()
                 con.close()
@@ -101,7 +101,7 @@ def tasks():
             all_posts=[]
             
             for user in tuples:
-                all_posts.append({'post_title':user[0], 'status':user[2],'deadline':str(user[1]).replace('00:00:00 GMT',''), 'Id':user[3], 'phone':user[5], 'email':user[4],'post':user[6] })
+                all_posts.append({'title':user[0], 'status':user[2],'deadline':str(user[1]).replace('00:00:00 GMT',''), 'Id':user[3], 'phone':user[5], 'email':user[4],'post':user[6] })
             
             for t in tuples:
                 print(t)
@@ -123,7 +123,7 @@ def posts():
             con.commit()
             con.close()
             
-            all_posts = [{'post_title':user[0], 'status':user[2],'deadline':str(user[1]).replace('00:00:00 GMT',''), 'Id':user[3], 'post':user[4]  } for user in tuples]
+            all_posts = [{'title':user[0], 'status':user[2],'deadline':str(user[1]).replace('00:00:00 GMT',''), 'Id':user[3], 'post':user[4]  } for user in tuples]
             
             for t in tuples:
                 print(t)
@@ -183,7 +183,7 @@ def updateProfile():
             
             con = psycopg2.connect(dbname="communityproject", user="postgres", password="dbpassword")
             cur = con.cursor()
-            cur.execute("UPDATE USERS SET firstname ='" + fname +"', lastname ='"+lname+"' ,birthday ='"+bday+"' ,emailid ='"+email+"' , phonenumber='"+phone+"' ,location='"+loc+"' , country='"+cntry+"' , state='"+ stat+"' WHERE USER_ID = "+ user_id + ";")
+            cur.execute("UPDATE USERS SET firstname ='" + fname +"', lastname ='"+lname+"' ,birthday ='"+bday +"' , phonenumber='"+phone+"' ,location='"+loc+"' , country='"+cntry+"' , state='"+ stat+"' WHERE USER_ID = "+ user_id + ";")
             print(cur)
             cur.close()
             con.commit()

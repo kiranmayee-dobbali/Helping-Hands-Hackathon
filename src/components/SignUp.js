@@ -363,7 +363,7 @@ required
 								<div className="text-center py-4 mt-3">
 									<MDBBtn color="primary" variant="contained" type="submit">Register</MDBBtn>
 								</div>
-								<NavLink variant="body2" to="/Signin" onSubmit={this.openLogin} style={{display: "flex",
+								<NavLink variant="body2" to="/" onSubmit={this.openLogin} style={{display: "flex",
                 justifyContent: "center",
                 alignItems: "center"
 }}>

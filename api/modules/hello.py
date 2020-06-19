@@ -5,7 +5,7 @@ from modules import app
 from sqlalchemy.ext.automap import automap_base
 
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:dbpassword@localhost:5432/communityproject'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:@localhost:5432/communityproject'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = "True"
 db = SQLAlchemy(app)
 
