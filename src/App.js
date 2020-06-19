@@ -102,7 +102,8 @@ function App(props) {
 
             <Route exact path="/SignUp"><SignUp/></Route>
             <Route exact path="/Mainpage2" strict component={Mainpage2} />
-            <Route exact path="/Mytasks" strict component={Mytasks} />
+            <Route exact path="/Mytasks" strict component={Mainpage2} />
+            <Route exact path="/Myposts" strict component={Mainpage2} />
             <Route exact path="/Profile" strict component={Profile} />
           </Switch>
         </div>

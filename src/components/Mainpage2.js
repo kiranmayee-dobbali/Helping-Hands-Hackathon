@@ -21,6 +21,7 @@ import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
 import ListAltOutlinedIcon from '@material-ui/icons/ListAltOutlined';
 import AssignmentTurnedInOutlinedIcon from '@material-ui/icons/AssignmentTurnedInOutlined';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
+import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
 import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
 import PersonIcon from '@material-ui/icons/Person';
 import Askhelp from './Askhelp'
@@ -34,7 +35,8 @@ import App from "../App";
 
 import Profile from "./Profile";
 //const Mytasks = lazy(() => import('./Mytasks'))
-import Mytasks from "./Mytasks"
+import Mytasks from "./Mytasks";
+import Myposts from "./Myposts"
 
 
 const drawerWidth = 210;
@@ -72,15 +74,15 @@ function Mainpage2(props) {
   if(props.location.state!=null){
     const emailid = props.location.state;
     email = emailid['userEmail'];
-    console.log("email id passedon ",email);  
-  } 
+    console.log("email id passedon ",email);
+  }
 else{
    email = props.userEmail;
-  console.log("email id passedon ",props.userEmail);  
+  console.log("email id passedon ",props.userEmail);
 }
   console.log("log status",);
-  
-// 
+
+//
   return (
     <Router>
       <div className={classes.root}>
@@ -116,6 +118,13 @@ else{
               </ListItem>
               </Link>
 
+              <Link to="/Myposts" className={classes.link}>
+              <ListItem button key={"My Posts"}>
+                <ListItemIcon><PlaylistAddCheckIcon /></ListItemIcon>
+                <ListItemText primary={"My Posts"} />
+              </ListItem>
+              </Link>
+
 
               <Link to={{pathname:"/Askhelp"}}  className={classes.link}>
 
@@ -143,25 +152,25 @@ else{
               </Link>
 
           </List>
-      
+
         </div>
         </Drawer>
-
         <Switch>
           <Route exact path="/Mainpage2"
           render={(props) => <Feedmain {...props} email={email} />}
-          
+
           />
 
-          <Route exact path="/Mytasks">
-         <Mytasks></Mytasks>
-          </Route>
+          <Route exact path="/Mytasks" render={(props)=><Mytasks />}/>
+
+          <Route exact path="/Myposts" render={(props)=><Myposts />}/>
+
 
           <Route exact path="/Askhelp"
            render={(props) => <Askhelp {...props} email={email} />}
-          
+
           />
-         
+
 
           <Route exact path="/Profile">
          <Profile></Profile>

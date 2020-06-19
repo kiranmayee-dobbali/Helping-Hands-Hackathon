@@ -28,17 +28,15 @@ class Mytasks extends React.Component {
         constructor(props) {
             super(props) //since we are extending class Table so we have to use super in order to override Component class constructor
             this.state = { //state is by default an object
-                Tasks: [{
-                    Task: 'To help buy grocery',
-                    Status: 'Pending',
-                    Deadline: '6-8-2020'
-                }],
+                Tasks: [],
                 isOpen: false,
                 desc: '',
+                email: '',
+                phone: '',
                 status: '',
                 R_id: ''
             };
-            //this.Clck = this.Clck.bind(this);
+
             this.toggleModal = this.toggleModal.bind(this);
             this.confrm = this.confrm.bind(this);
         }
@@ -58,13 +56,11 @@ class Mytasks extends React.Component {
              val = 'Y'
            }
           else if (val.toLowerCase() == "givenup") {
-            val = 'G'
+            val = 'N'
           }
           else{
             alert('Enter Correct value')
           }
-        }
-
 
           stats.append('status', val);
           stats.append('id', r_id);
@@ -76,11 +72,17 @@ class Mytasks extends React.Component {
               credentials: 'same-origin',
               body: stats
           }).then(response => {window.location.reload(false);;})
+        }
+      else{
+        //Do Nothing
+        }
+
+
+
         };
 
 
         componentDidMount() {
-            console.log('In mount')
             let fd = new FormData();
             fd.append('id', '2');
 
@@ -96,74 +98,100 @@ class Mytasks extends React.Component {
         }
 
         renderTableHeader() {
-            console.log('In header')
             let intial = (this.state.Tasks)[0]
-            console.log("initial render", intial);
-            
+
             intial['Description'] = 'D';
-            //intial['Delete'] = 'C';
-            console.log(intial)
             return Object.keys(intial).map((key, index) => {
-                    return ( <th key = { index} show = {false}> 
+
+                    return (
+
+<th key = { index} show = {false}>
                     {
                             key.toUpperCase()
                         } < /th>)
-                    })
+
+            }
+            )
             }
 
             renderTableData() {
                 return this.state.Tasks.map((task, index) => {
                     //let { Task, Deadline, Status } = task //destructuring
                     //alert(Task)
-                    task['status'] = (task['status'] == 'N'? 'Pending':'Completed')
-                    return ( <tr key = {  index } >
-                        <td > {task['post']} </td>
-                       <td > {task['status']} < /td>
-                      <td> {
+                  task['status'] = ((task['status'] == 'P' || task['status'] == 'Pending')? 'Pending':'New')
+                    return (
+	<tr key = {  index } >
+		<td > {task['post_title']} </td>
+
+			<td> {
                             task['deadline']
                         } < /td>
-                        <td > {
+        <td > {task['status']} < /td>
+				<td > {
                             task['Id']
                         } < /td>
-                        <td> <>< Button onClick = {
-                            () => {
-                                this.setState({
-                                    isOpen: !this.state.isOpen
-                                });
-                                this.setState({
-                                    desc: task['post']
-                                });
-                            }
-                        } > Description < /Button>
-                        < Modal show = {
-                            this.state.isOpen
-                        }
-                        onHide = {
-                          this.toggleModal
-                        } >
-                                                 <ModalHeader closeButton >
-                        <ModalTitle > Description < /ModalTitle>
-                        </ModalHeader>
-                        <ModalBody> {
-                            this.state.desc
-                        } < /ModalBody>
-                        <Modal.Footer >
-                        <Button
-                        onClick = {
-                            this.toggleModal
-                        } >
-                        Close <
-                        /Button> <
-                        /Modal.Footer> <
-                        /Modal>
-                        </>
-                        </td>
+                        <td > {
+                                            task['phone']
+                                        } < /td>
+                                        <td > {
+                                                            task['email']
+                                                        } < /td>
+                                                        <td > {
+                                                                            task['post']
+                                                                        } < /td>
                         <td>
-                        <MDBBtn  size="sm" color="primary" onClick = {() => {this.confrm(task['Id'])}}>
-        <MDBIcon icon="times" />
-      </MDBBtn>
-                        </td>
-                        </tr>
+                        < Button onClick = {
+                                          () => {
+                                              this.setState({
+                                                  isOpen: !this.state.isOpen
+                                              });
+                                              this.setState({
+                                                  desc: task['post']
+                                              });
+
+                                                this.setState({
+                                                    phone: task['phone']
+                                                });
+
+
+                                                this.setState({
+                                                    email: task['email']
+                                                });
+
+
+                                          }
+                                      } > Description < /Button>
+                                      < Modal show = {
+                                          this.state.isOpen
+                                      }
+                                       >
+              						<ModalHeader closeButton >
+              							<ModalTitle > Description < /ModalTitle>
+              							</ModalHeader>
+              							<ModalBody> Description :- {
+                                          this.state.desc
+                                      }
+                                      <br/>
+                                      <br/>
+                                      Details :- {this.state.email} {this.state.phone}
+
+                                      < /ModalBody>
+              								<Modal.Footer >
+              									<Button
+                                      onClick = {
+                                          this.toggleModal
+                                      } >
+                                      Close <
+                                      /Button><
+                                      /Modal.Footer><
+                                      /Modal>
+                  </td>
+								<td>
+									<MDBBtn  size="sm" color="primary" onClick = {() => {this.confrm(task['Id'])}}>
+										<MDBIcon icon="times" />
+									</MDBBtn>
+								</td>
+							</tr>
                     )
                 })
             }
@@ -171,38 +199,41 @@ class Mytasks extends React.Component {
 
 
             render() { //Whenever our class runs, render method will be called automatically, it may have already defined in the constructor behind the scene.
-                console.log('In render')
-                return ( <
-                    MDBContainer >
-                    <
-                    MDBRow className = 'flex-center' >
-                    <
-                    MDBCol md = "10" >
-                    <
-                    MDBCard >
-                    <
-                    MDBCardBody >
-                    <
-                    MDBTable striped >
-                    <
-                    MDBTableHead >
-                    <
+
+
+              if (Object.keys(this.state.Tasks).length == 0)
+              {
+                return (<h2 style={{position: 'absolute', left: '50%', top: '50%',
+        transform: 'translate(-50%, -50%)'
+ }}> No Tasks for you. Volunteer to add tasks. </h2>)
+              }
+							return(<MDBContainer ><
+                    MDBRow  className = 'flex-center' ><
+                    MDBCol md = "11" ><
+                    MDBCard ><
+                    MDBCardBody ><
+                    MDBTable id="tasks" striped  ><
+                    MDBTableHead ><
                     tr > {
                         this.renderTableHeader()
                     } <
-                    /tr> <
-                    /MDBTableHead> <
+                    /tr><
+                    /MDBTableHead><
                     MDBTableBody > {
                         this.renderTableData()
                     } <
-                    /MDBTableBody> <
-                    /MDBTable> <
-                    /MDBCardBody> <
-                    /MDBCard> <
-                    /MDBCol> <
-                    /MDBRow> <
+                    /MDBTableBody><
+                    /MDBTable><
+                    /MDBCardBody><
+                    /MDBCard><
+                    /MDBCol><
+                    /MDBRow><
                     /MDBContainer>
-                );
+                  )
+
+
+
+
             }
         }
 

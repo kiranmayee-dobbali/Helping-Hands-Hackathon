@@ -91,13 +91,37 @@ def tasks():
             user_id = request.form['id']
             con = psycopg2.connect(dbname="communityproject", user="postgres", password="dbpassword")
             cur = con.cursor()
-            cur.execute("SELECT POST, DEADLINE, STATUS, POST_ID FROM Posts WHERE Volunteer_id ="+user_id+" and STATUS = 'N' ;")
+            cur.execute("SELECT POST_TITLE, DEADLINE, STATUS, POST_ID, CASE WHEN ( CHOICE = 'E' OR CHOICE = 'B') THEN U.EMAILID END, CASE WHEN ( CHOICE = 'P' OR CHOICE = 'B') THEN U.PHONENUMBER END, POST FROM Posts, USERS U WHERE Volunteer_id ="+user_id+" and POST_USER_ID = U.USER_ID AND  STATUS = 'P' ;")
+            tuples = cur.fetchall()
+            cur.close()
+            con.commit()
+            con.close()
+            all_posts=[]
+            
+            for user in tuples:
+                all_posts.append({'post_title':user[0], 'status':user[2],'deadline':str(user[1]).replace('00:00:00 GMT',''), 'Id':user[3], 'phone':user[5], 'email':user[4],'post':user[6] })
+            
+            for t in tuples:
+                print(t)
+            
+            return jsonify(all_posts)
+        else:
+            print('Error')
+
+@app.route('/Myposts', methods=['GET', 'POST'])
+def posts():
+    if request.method == 'POST':
+        if 'id' in request.form:
+            user_id = request.form['id']
+            con = psycopg2.connect(dbname="communityproject", user="postgres", password="dbpassword")
+            cur = con.cursor()
+            cur.execute("SELECT POST_TITLE, DEADLINE, STATUS, POST_ID, POST  FROM Posts WHERE post_user_id ="+user_id+" and (STATUS = 'P' or STATUS = 'N') ;")
             tuples = cur.fetchall()
             cur.close()
             con.commit()
             con.close()
             
-            all_posts = [{'post':user[0], 'status':user[2],'deadline':str(user[1]).replace('00:00:00 GMT',''), 'Id':user[3]  } for user in tuples]
+            all_posts = [{'post_title':user[0], 'status':user[2],'deadline':str(user[1]).replace('00:00:00 GMT',''), 'Id':user[3], 'post':user[4]  } for user in tuples]
             
             for t in tuples:
                 print(t)
