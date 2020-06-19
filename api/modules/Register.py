@@ -91,7 +91,7 @@ def tasks():
             user_id = request.form['id']
             con = psycopg2.connect(dbname="communityproject", user="postgres", password="dbpassword")
             cur = con.cursor()
-            cur.execute("SELECT POST, DEADLINE, STATUS, POST_ID FROM Posts WHERE Volunteer_id ="+user_id+" and STATUS = 'N' ;")
+            cur.execute("SELECT POST, DEADLINE, STATUS, POST_ID FROM Posts WHERE Volunteer_id ="+user_id+" and STATUS = 'P' ;")
             tuples = cur.fetchall()
             cur.close()
             con.commit()

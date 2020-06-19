@@ -23,15 +23,20 @@ def volunteering():
     if request.method == "POST":
         data =  request.get_json(force=True)
         print("post data", data)
-        print("volunteer user email:", data['emailid'])
+        print("volunteer user id:", data['login_user_id'])
         print("post id", data['post_id'])
+
+        #update post status to Pending P
+
+
         #get volunteer id using username
 
-        volunteer_id = db.session.query(User.user_id).filter(User.emailid == data['emailid']).scalar()
+        volunteer_id = db.session.query(User.user_id).filter(User.user_id == data['login_user_id']).scalar()
         print("volunteer id", volunteer_id)
 
         post_record = db.session.query(Post).get(data['post_id'])
         post_record.volunteer_id = volunteer_id
+        post_record.status = "P"
         db.session.commit()
 
         return "Valid"

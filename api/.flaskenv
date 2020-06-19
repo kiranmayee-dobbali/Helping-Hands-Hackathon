@@ -1,2 +1,2 @@
-FLASK_APP=Register.py
+FLASK_APP=modules
 FLASK_ENV=development

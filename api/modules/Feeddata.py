@@ -23,17 +23,26 @@ def feed_data():
     # send them to react
     if request.method == "POST":
         data = request.get_json(force=True)
-        print("email", data['email'])
+        print("login user id", data['login_user_id'])
         # print("email", data['email'])
 
-        # get all posts from Post table
-        all_posts = db.session.query(Post).all()
+        # get location for the given user login id
+        location_state = db.session.query(User.state).filter(User.user_id == data['login_user_id']).scalar()
+        print("location_state id", location_state)
+
+        all_user_ids = db.session.query(User.user_id).filter(User.state == location_state).all()
+        print("all user id from same location",all_user_ids)
         post_data = []
-        for r in all_posts:
-            print(r.deadline)
-            post_data.append(
-                {"post_id": r.post_id, "title": r.post_title, "description": r.post, "post_user_id": r.post_user_id,
-                 "deadline": r.deadline})   
+
+
+        all_users = db.session.query(User.user_id,User.firstname).filter(User.state == location_state).all()
+        print("all users from same location",all_users)
+        for user_id,user_name in all_users:
+            result = db.session.query(Post).filter(Post.post_user_id == user_id).filter(Post.status=='N').all()
+            for r in result:
+                post_data.append(
+                    {"post_id": r.post_id, "title": r.post_title, "description": r.post, "post_user_id": r.post_user_id,
+                     "deadline":  str(r.deadline).replace('00:00:00 GMT',''),"user_name":user_name})
 
         print(post_data)
         print("data", jsonify({'posts': post_data}))

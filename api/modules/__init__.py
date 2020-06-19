@@ -10,3 +10,4 @@ from modules import Register
 from modules import askhelp
 from modules import Feeddata
 from modules import volunteer
+from modules import resetpwd
