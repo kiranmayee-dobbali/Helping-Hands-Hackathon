@@ -21,6 +21,7 @@ import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
 import ListAltOutlinedIcon from '@material-ui/icons/ListAltOutlined';
 import AssignmentTurnedInOutlinedIcon from '@material-ui/icons/AssignmentTurnedInOutlined';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
+import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
 import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
 import PersonIcon from '@material-ui/icons/Person';
 import Askhelp from './Askhelp'
@@ -36,6 +37,7 @@ import Profile from "./Profile";
 //const Mytasks = lazy(() => import('./Mytasks'))
 import Mytasks from "./Mytasks"
 import { useHistory} from 'react-router';
+import Myposts from "./Myposts"
 
 
 const drawerWidth = 210;
@@ -130,6 +132,13 @@ const logout=()=>{
               </ListItem>
               </Link>
 
+              <Link to="/Myposts" className={classes.link}>
+              <ListItem button key={"My Posts"}>
+                <ListItemIcon><PlaylistAddCheckIcon /></ListItemIcon>
+                <ListItemText primary={"My Posts"} />
+              </ListItem>
+              </Link>
+
 
               <Link to={{pathname:"/Askhelp"}}  className={classes.link}>
 
@@ -161,20 +170,20 @@ const logout=()=>{
       
         </div>
         </Drawer>
-
         <Switch>
           <Route exact path="/Mainpage2"
           render={(props) => <Feedmain {...props} login_user_id={login_user_id}/>}
           />
 
-          <Route exact path="/Mytasks">
-         <Mytasks></Mytasks>
-          </Route>
+          <Route exact path="/Mytasks" render={(props)=><Mytasks />}/>
+
+          <Route exact path="/Myposts" render={(props)=><Myposts />}/>
+
 
           <Route exact path="/Askhelp"
            render={(props) => <Askhelp {...props}/>}
           />
-         
+
 
           <Route exact path="/Profile">
          <Profile></Profile>

@@ -1,5 +1,5 @@
 import React from "react";
-//import '../App.css';
+import '../App.css';
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBCard, MDBCardBody, MDBIcon, MDBInput } from 'mdbreact';
 import { Switch, Route ,withRouter} from 'react-router-dom'
 import {BrowserRouter as Router,NavLink} from 'react-router-dom'
@@ -8,6 +8,7 @@ import '../index.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
+import Button from '@material-ui/core/Button';
 import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
 class SignUp extends React.Component {
 
@@ -360,9 +361,12 @@ required
 								<div className="errorMsg">{this.state.errors.loc}</div>
 								<br />
 								<div className="text-center py-4 mt-3">
-									<MDBBtn color="primary" type="submit">Register</MDBBtn>
+									<MDBBtn color="primary" variant="contained" type="submit">Register</MDBBtn>
 								</div>
-								<NavLink  variant="body2" to="/Signin" onSubmit={this.openLogin}>
+								<NavLink variant="body2" to="/Signin" onSubmit={this.openLogin} style={{display: "flex",
+                justifyContent: "center",
+                alignItems: "center"
+}}>
                 {"Already have an account? Sign in"}
               </NavLink>
 							</form>

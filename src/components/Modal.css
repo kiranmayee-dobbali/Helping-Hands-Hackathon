@@ -9,3 +9,28 @@ filter: alpha(opacity=20);
 {
   display: none;
  }
+
+
+ #posts thead tr th:nth-child(5),
+ #posts tbody tr td:nth-child(5)
+ {
+   display: none;
+  }
+
+  #tasks thead tr th:nth-child(5),
+  #tasks tbody tr td:nth-child(5)
+  {
+    display: none;
+   }
+
+   #tasks thead tr th:nth-child(6),
+   #tasks tbody tr td:nth-child(6)
+   {
+     display: none;
+    }
+
+    #tasks thead tr th:nth-child(7),
+    #tasks tbody tr td:nth-child(7)
+    {
+      display: none;
+     }

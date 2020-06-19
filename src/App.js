@@ -1,11 +1,10 @@
 import React from 'react';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
+//import './App.css';
 import {   BrowserRouter as Router,Route, Switch, Link ,withRouter,Redirect, BrowserRouter} from "react-router-dom";
-import 'mdbreact/dist/css/mdb.css'; 
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import 'bootstrap-css-only/css/bootstrap.min.css'; 
-import Home from './components/Home';
+//import '@fortawesome/fontawesome-free/css/all.min.css';
+//import 'bootstrap-css-only/css/bootstrap.min.css';
+//import Home from './components/Home';
 import SignIn from './components/Login'
 import SignUp from "./components/SignUp"
 import Feed from "./components/Feed";
@@ -23,6 +22,7 @@ import Login from './components/Login';
 import {browserHistory} from 'react-router-dom'
 import Forgotpassword from './components/Forgotpassword';
 import Profile from "./components/Profile";
+import { Myposts } from "./components/Myposts";
 
 let userEmail = null; 
 
@@ -80,10 +80,10 @@ function App(props) {
                 <Login {...props}  handleSuccessfulAuth={handleSuccessfulAuth}/>
               )
               }
-              />                
-            
-            
-            
+              />
+
+
+
             <Route exact path="/forgotpassword" strict component={Forgotpassword} />
 
             <Route exact path='/Askhelp' 
@@ -96,19 +96,20 @@ function App(props) {
             render ={ props =>(
               <Mainpage2 {...props} login_user_id={login_user_id} />
             )
-          }        
+          }
             />
  
             <Route exact path="/SignUp"><SignUp/></Route>
             <Route exact path="/Mytasks" strict component={Mainpage2} />
             <Route exact path="/Profile" strict component={Mainpage2} />
+            <Route exact path="/Myposts" strict component={Mainpage2} />
+
           </Switch>
         </div>
       </div>
     </div></Router>
 
   );
-//  return (<Example Desc="Hi how are you?"/>);
 }
 
 export default withRouter(App);

@@ -82,7 +82,7 @@ export default function Askhelp(props){
       
       fetch("/askhelp", {
         method:"POST",
-        cache: "no-cache",
+        cache: "no-cache",  
         headers:{
             "content_type":"application/json",
   
