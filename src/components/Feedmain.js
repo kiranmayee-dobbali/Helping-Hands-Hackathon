@@ -20,25 +20,24 @@ class Feedmain extends Component {
       isLoading: true,
       posts: [],
       error: null,
-      emailid: null
+      emailid: null,
+      login_user_id: null
     }
   }
 
    //datanow = this.props.email;
   //this.setState({datanow:email});
-
+  
   componentDidMount() {
     // this.fetchUsers();
-    console.log("mount");
-    console.log(this.emailid);
-    
-     this.fetchPosts(this.emailid);
+    console.log("mount");    
+     this.fetchPosts();
      // console.log("data", this.datanow);
      
    }
 
 
-  fetchPosts(emailid){
+  fetchPosts(){
         // Where we're fetching data from
     fetch('http://localhost:5000/feeddata',{
         mode: "cors",
@@ -48,7 +47,7 @@ class Feedmain extends Component {
             "content_type":"application/json",
   
         },
-        body:JSON.stringify({"email":emailid})
+        body:JSON.stringify({"login_user_id":this.login_user_id})
         
     })
     // We get the API response and receive data in JSON format...
@@ -86,7 +85,7 @@ class Feedmain extends Component {
           "content_type":"application/json",
 
       },
-      body:JSON.stringify({"post_id":post_id,"emailid":this.emailid})
+      body:JSON.stringify({"post_id":post_id,"login_user_id":this.login_user_id})
       
       }
   ).then(response => response.text()).then(result =>  {
@@ -111,15 +110,17 @@ render(){
    
     console.log("posts in render", this.state.posts);
     
-    this.emailid = this.props.email;
-    console.log("email from mainpage in feedmain", this.emailid);
+    // this.emailid = this.props.email;
+    // console.log("email from mainpage in feedmain", this.emailid);
     
-
+    this.login_user_id = this.props.login_user_id;
+  
+    console.log("login user id feedmain", this.login_user_id);
 
 
     let peopleCards = this.state.posts.map(person => {
         return (
-            <Feed key={person.post_id} person={person} userEmail={this.emailid} removePerson={this.removePerson.bind(this)} />
+            <Feed key={person.post_id} person={person}  removePerson={this.removePerson.bind(this)} />
         )
       })
  

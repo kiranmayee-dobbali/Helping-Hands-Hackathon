@@ -21,6 +21,15 @@ import {
   Container, Typography, Grid,
 } from "@material-ui/core";
 
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
+
+
+import Mainpage2 from './Mainpage2';
+
 const useStyles = makeStyles((theme) => ({
     root: {
       '& .MuiTextField-root': {
@@ -35,6 +44,9 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(3),
         width: '25ch',
       },
+    },
+    checkboxes:{
+       paddingLeft: 120,
     }
     
   }));
@@ -61,10 +73,12 @@ export default function Askhelp(props){
     }
 
     const handleSubmit=(e)=>{
+      const email_checked = state.checkedA;
+      const phone_checked = state.checkedB;
       e.preventDefault();
       alert("Your task is submitted");
       console.log("submitted");
-      console.log("submit ",title,postDescription,email);
+      console.log("submit ",title,postDescription,login_user_id);
       
       fetch("/askhelp", {
         method:"POST",
@@ -73,7 +87,7 @@ export default function Askhelp(props){
             "content_type":"application/json",
   
         },
-        body:JSON.stringify({email,title,postDescription,selectedDate})
+        body:JSON.stringify({login_user_id,title,postDescription,selectedDate,email_checked,phone_checked})
         
         }
     ).then(response => response.text()).then(result =>  {
@@ -98,8 +112,8 @@ export default function Askhelp(props){
     const classes = useStyles();
     const [title,setTitle] = useState(""); 
     const [postDescription, setPostDescription] = useState("");
-    const email = props.email;
-    console.log("data passed",props.email);
+    // const email = props.email;
+    // console.log("data passed",props.email);
     
 
     var today = new Date();
@@ -112,26 +126,63 @@ export default function Askhelp(props){
       setSelectedDate(date);
     };
 
+    const login_user_id = localStorage.getItem("login_user_id");
+    console.log("email after reload in askhelp", login_user_id);
 
+
+    const [state, setState] = React.useState({
+      checkedA:true,
+      checkedB: false,
+    });
+  
+    const handleChange = (event) => {
+      setState({ ...state, [event.target.name]: event.target.checked });
+      console.log("status of checked",state.checkedB, state.checkedA);
+      
+    };
 return(
     <Container >
     <Toolbar>
     </Toolbar>
      <form className={classes.root}  onSubmit={handleSubmit} action="http://localhost:5000/askhelp" method="POST" noValidate autoComplete="off">
-    <Typography variant="h6" gutterBottom>
-      Fill the details below
-    </Typography>
     <Grid >
     <TextField   id="title" name="title" value={title} label="Title" variant="outlined" onChange={handleTextChange}/>
     </Grid>
     <Grid>
     <TextField  type="reset" id="description" value={postDescription} name="description"  label="Description" variant="outlined"   multiline
     rows={10}
-    rowsMax={10}
+    rowsMax={8}
     fullWidth
     onChange={handleTextChange}
     />    
     </Grid>
+    <FormGroup row className={classes.checkboxes}>
+
+        <FormControlLabel
+            control={
+              <Checkbox
+                checked={state.checkedA}
+                onChange={handleChange}
+                name="checkedA"
+                color="primary"
+              />
+            }
+            label="Email"
+          />
+
+        <FormControlLabel
+            control={
+              <Checkbox
+                checked={state.checkedB}
+                onChange={handleChange}
+                name="checkedB"
+                color="primary"
+              />
+            }
+            label="Phone Number"
+          />
+
+    </FormGroup>
 
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <Grid container justify="space-around"  className={classes.customWidth}>
@@ -158,6 +209,7 @@ return(
 
     </form> 
   </Container>
+
 );
 
 

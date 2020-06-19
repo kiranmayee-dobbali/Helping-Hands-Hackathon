@@ -35,6 +35,7 @@ import Login from './Login';
 import Profile from "./Profile";
 //const Mytasks = lazy(() => import('./Mytasks'))
 import Mytasks from "./Mytasks"
+import { useHistory} from 'react-router';
 
 
 const drawerWidth = 210;
@@ -66,21 +67,34 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
+
+
 function Mainpage2(props) {
   const classes = useStyles();
-  let email = null;
-  if(props.location.state!=null){
-    const emailid = props.location.state;
-    email = emailid['userEmail'];
-    console.log("email id passedon ",email);  
-  } 
-else{
-   email = props.userEmail;
-  console.log("email id passedon ",props.userEmail);  
-}
-  console.log("log status",);
-  
+//   let email = null;
+//   if(props.location.state!=null){
+//     const emailid = props.location.state;
+//     email = emailid['userEmail'];
+//     console.log("email id passedon ",email);  
+//   } 
+// else{
+//    email = props.userEmail;
+//   console.log("email id passedon ",email);  
+// }
+//   console.log("log status",);
+let login_user_id = localStorage.getItem("login_user_id");
+const history2 = useHistory()
+
+console.log("login user id in Mainpage", login_user_id);
 // 
+const logout=()=>{
+  props.history.push(
+    {pathname:"/",
+  
+    });
+    history2.go();
+
+}
   return (
     <Router>
       <div className={classes.root}>
@@ -134,7 +148,7 @@ else{
               </Link>
 
 
-              <Link to="/signin" className={classes.link}>
+              <Link to="/" className={classes.link} onClick={logout}>
 
               <ListItem button key={"Sign out"}>
                 <ListItemIcon><ExitToAppOutlinedIcon /></ListItemIcon>
@@ -143,15 +157,14 @@ else{
               </Link>
 
           </List>
-          
+
       
         </div>
         </Drawer>
 
         <Switch>
           <Route exact path="/Mainpage2"
-          render={(props) => <Feedmain {...props} email={email} />}
-          
+          render={(props) => <Feedmain {...props} login_user_id={login_user_id}/>}
           />
 
           <Route exact path="/Mytasks">
@@ -159,8 +172,7 @@ else{
           </Route>
 
           <Route exact path="/Askhelp"
-           render={(props) => <Askhelp {...props} email={email} />}
-          
+           render={(props) => <Askhelp {...props}/>}
           />
          
 
@@ -172,8 +184,7 @@ else{
          <Settings></Settings>
           </Route>
 
-          <Route exact path="/signin">
-         <Login></Login>
+          <Route exact path="/">
           </Route>
 
         </Switch>

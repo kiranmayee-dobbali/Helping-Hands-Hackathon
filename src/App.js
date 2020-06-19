@@ -24,34 +24,45 @@ import {browserHistory} from 'react-router-dom'
 import Forgotpassword from './components/Forgotpassword';
 import Profile from "./components/Profile";
 
+let userEmail = null; 
+
 function App(props) {
   //const [loggedInStatus, setLoginStatus] = useState("NOT_LOGGED_IN");
-  let userEmail = null; 
   let loggedInStatus="NOT_LOGGED_IN";
   const history2 = useHistory()
+  let login_user_id=null;
+
 
   function handleSuccessfulAuth(data){
-    console.log("data email-->", data);
-    userEmail = data;
-    loggedInStatus="LOGGED_IN";
+
+    console.log("data usr id-->", data);
+    if(data!=null){
+      loggedInStatus="LOGGED_IN";
+
+    }
+    
     if(loggedInStatus=="LOGGED_IN"){
-      console.log("emailid is----->",userEmail);
+      console.log("usrid is----->",data);
+
       props.history.push(
         {pathname:"/Mainpage2",
-        state:{userEmail}
+        state:{data}
         });
-     
-      console.log("state",userEmail)
-      history2.go()
+      localStorage.setItem("login_user_id", data);
     
     }
     else{
       console.log("NOT LOGGED IN");
-      
+      props.history.push(
+        {pathname:"/"
+        });
     }
 
+    history2.go()
 
   }
+
+
   // loggedInStatus="NOT_LOGGED_IN";
   console.log("login status", loggedInStatus);
 //   if(loggedInStatus=="NOT_LOGGED_IN")
@@ -64,8 +75,7 @@ function App(props) {
       <div className="auth-wrapper">
         <div className="auth-inner">
           <Switch>
-            <Route exact path="/" component={SignIn} />
-            <Route exact path="/signin"
+            <Route exact path="/"
               render ={ props =>(
                 <Login {...props}  handleSuccessfulAuth={handleSuccessfulAuth}/>
               )
@@ -76,35 +86,22 @@ function App(props) {
             
             <Route exact path="/forgotpassword" strict component={Forgotpassword} />
 
-            <Route exact path='/Feed'
-                render ={ props =>(
-                <Feed {...props}  userEmail={userEmail}/>
-              )
-            }        
-                    
-            />
-            <Route exact path='/Feedmain' strict component={Feedmain}/>
-
             <Route exact path='/Askhelp' 
              render ={ props =>(
-              <Askhelp {...props}  userEmail={userEmail}/>
+              <Mainpage2 {...props}/>
             )
-          }        
-                      
-            />
+          } />
 
             <Route exact path="/Mainpage2"
             render ={ props =>(
-              <Mainpage2 {...props}  userEmail={userEmail}/>
+              <Mainpage2 {...props} login_user_id={login_user_id} />
             )
           }        
             />
  
-
             <Route exact path="/SignUp"><SignUp/></Route>
-            <Route exact path="/Mainpage2" strict component={Mainpage2} />
-            <Route exact path="/Mytasks" strict component={Mytasks} />
-            <Route exact path="/Profile" strict component={Profile} />
+            <Route exact path="/Mytasks" strict component={Mainpage2} />
+            <Route exact path="/Profile" strict component={Mainpage2} />
           </Switch>
         </div>
       </div>

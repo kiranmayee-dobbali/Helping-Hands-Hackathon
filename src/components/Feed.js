@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Feed(props){
 
   const classes = useStyles();
- let { post_id,title,description, post_user_id,deadline } = props.person;
+ let { post_id,title,description, post_user_id,deadline,user_name} = props.person;
 //  let {id,title,location,description}= props.person;
   console.log("got valus",post_id,title,description);
   const [open, setOpen] = React.useState(false);
@@ -74,6 +74,8 @@ export default function Feed(props){
     if(value=="yes"){
       //add to my tasks
       console.log(value,"id",{post_id});
+
+      
       props.removePerson(post_id);
     }    
   };
@@ -101,7 +103,7 @@ export default function Feed(props){
                   {title}
                 </Typography>
                 <Typography variant="body2" color="textSecondary">
-                  {post_user_id}
+                  Posted by : {user_name}
                 </Typography>
                 <Typography variant="body2" gutterBottom>
                   {description}
@@ -139,7 +141,7 @@ export default function Feed(props){
               </Grid>
             </Grid> 
             <Grid item>
-  <Typography variant="subtitle1">By:{deadline}</Typography>
+  <Typography variant="subtitle1">By: {deadline}</Typography>
             </Grid>
           </Grid>
         </Grid>

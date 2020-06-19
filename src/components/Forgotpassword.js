@@ -58,14 +58,46 @@ const styles = makeStyles((theme) => ({
   const classes = styles();
 
   const [open, setOpen] = React.useState(false);
+  let [newpassword,setPassword] = useState(null);
+  let [newpasswordError, setPasswordError] = useState("");
+  let [confirmpassword,setConfirmPassword] = useState(null);
+  let [confirmpasswordError, setConfirmPasswordError] = useState("");
+  let [email,setEmail ] = useState(null);
+   let [currentpassword, setCurrentPassword] = useState(null);
 
   const handleClickOpen = () => {
-    setOpen(true);
+    // setOpen(true);
   };
 
-  const handleChange =(e, value)=>{
-      //
+  const handleChange =(e)=>{
+    const { name, value } = e.target;
+
+    if(name=='newpassword'){
+    newpasswordError = value.length < 6 ? "minimum 6 characaters required" : "";
+    setPasswordError(newpasswordError);
+    setPassword(value);
+    }
+    else if(name=='email'){
+        setEmail(value);
+        console.log(email);
+        
+    }
+    else if(name=='currentpassword'){
+        setCurrentPassword(value);
+        console.log(currentpassword);
+        
+    }
   }
+
+  const confirmhandleChange =(e)=>{
+    const { name, value } = e.target;
+
+    confirmpasswordError = value == newpassword ? "passwords match" : "passwords not matched";
+    setConfirmPasswordError(confirmpasswordError);
+    setConfirmPassword(value);  
+  }
+
+
   const handleClose = (e,value) => {   
     setOpen(false);
     if(value=="yes"){
@@ -77,6 +109,34 @@ const styles = makeStyles((theme) => ({
 
   const handleSubmit =(e)=>{
     e.preventDefault();
+    console.log("new pwd", newpassword, "confirm pwd",confirmpassword );
+    fetch("/resetpassword", {
+        method:"POST",
+        cache: "no-cache",  
+        headers:{
+            "content_type":"application/json",
+  
+        },
+        body:JSON.stringify({email,currentpassword,newpassword})
+        
+        }
+    ).then(response => response.text()).then(result =>  {
+      console.log(result);
+      if (result=="Valid") { 
+        setOpen(true);
+        console.log("values resett ");
+      }
+        else if(result=="Invalid email"){
+            alert("Invalid email")
+          
+        }
+        else if(result=="Invalid current password"){
+            alert("Invalid current password")
+        }
+         })
+
+
+
 
   }
   return(
@@ -89,8 +149,20 @@ const styles = makeStyles((theme) => ({
         </Typography>
 
         <form className={classes.form} onSubmit={handleSubmit} noValidate>
-                    <div className="currentpassword">
-
+                    <div className="resetform">
+                    <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="email"
+                            label="Email Address"
+                            name="email"
+                            autoComplete="email"
+                            autoFocus
+                            onChange={handleChange}
+                        />
+                        
                         <TextField
                             variant="outlined"
                             margin="normal"
@@ -98,11 +170,13 @@ const styles = makeStyles((theme) => ({
                             fullWidth
                             id="currentpassword"
                             label="Current Password"
-                            name="cpwd"
+                            name="currentpassword"
                             autoComplete="currentpassword"
                             autoFocus
-                            // onChange={handleChange}
+                            onChange={handleChange}
                         />
+                    <div className="newpassword">
+
                         <TextField
                             variant="outlined"
                             margin="normal"
@@ -110,11 +184,17 @@ const styles = makeStyles((theme) => ({
                             fullWidth
                             id="newpassword"
                             label="New Password"
-                            name="npassword"
+                            name="newpassword"
                             autoComplete="newpassword"
                             autoFocus
                             onChange={handleChange}
                         />
+                        {newpasswordError.length > 0 && (
+                <span className="errorMessage" textcolor="Red">{newpasswordError}</span> 
+                        )}
+                    </div> 
+                
+                    <div className="confirmpassword">
                         <TextField
                             variant="outlined"
                             margin="normal"
@@ -125,9 +205,12 @@ const styles = makeStyles((theme) => ({
                             name="confirmpassword"
                             autoComplete="confirmpassword"
                             autoFocus
-                            // onChange={handleChange}
+                            onChange={confirmhandleChange}
                         />
-
+                        {confirmpasswordError.length > 0 && (
+                <span className="errorMessage" >{confirmpasswordError}</span> 
+                        )}
+                    </div>
                         <Button
                             type="submit"
                             fullWidth
@@ -138,34 +221,34 @@ const styles = makeStyles((theme) => ({
                         >
                             Reset Password
                          </Button>
-            <Dialog
-                  open={open}
-                  TransitionComponent={Transition}
-                  keepMounted
-                  onClose={handleClose}
-                  aria-labelledby="alert-dialog-slide-title"
-                  aria-describedby="alert-dialog-slide-description"
-                >
-                <DialogTitle id="alert-dialog-slide-title">{"Reset Password"}</DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-slide-description">
-                    You have successfully set your new Password.
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={(e) => {handleClose(e, "yes")}} color="primary">
-                    Ok
-                    </Button>
-                </DialogActions>
-            </Dialog>
-            <Grid container>
-                <Grid item xs>
-                <NavLink variant="body2" to="/signin" onSubmit={Login} >
-                    {"Open Signin page"}
-                </NavLink>
-                </Grid>
-            </Grid>
-            </div>
+                        <Dialog
+                            open={open}
+                            TransitionComponent={Transition}
+                            keepMounted
+                            onClose={handleClose}
+                            aria-labelledby="alert-dialog-slide-title"
+                            aria-describedby="alert-dialog-slide-description"
+                            >
+                            <DialogTitle id="alert-dialog-slide-title">{"Reset Password"}</DialogTitle>
+                            <DialogContent>
+                                <DialogContentText id="alert-dialog-slide-description">
+                                You have successfully set your new Password.
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={(e) => {handleClose(e, "yes")}} color="primary">
+                                Ok
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
+                        <Grid container>
+                            <Grid item xs>
+                            <NavLink variant="body2" to="/" onSubmit={Login} >
+                                {"Open Signin page"}
+                            </NavLink>
+                            </Grid>
+                        </Grid>
+                   </div>
         </form>
 
     </div>

@@ -21,6 +21,7 @@ import ModalTitle from "react-bootstrap/ModalTitle";
 import ModalDialog from 'react-bootstrap/ModalDialog';
 import './Modal.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import Toolbar from '@material-ui/core/Toolbar';
 
 
 class Mytasks extends React.Component {
@@ -108,7 +109,7 @@ class Mytasks extends React.Component {
                     return ( <th key = { index} show = {false}> 
                     {
                             key.toUpperCase()
-                        } < /th>)
+                        } </th>)
                     })
             }
 
@@ -117,16 +118,16 @@ class Mytasks extends React.Component {
                     //let { Task, Deadline, Status } = task //destructuring
                     //alert(Task)
                     task['status'] = (task['status'] == 'N'? 'Pending':'Completed')
-                    return ( <tr key = {  index } >
-                        <td > {task['post']} </td>
-                       <td > {task['status']} < /td>
+                    return ( <tr key = {index}>
+                        <td> {task['post']} </td>
+                       <td> {task['status']} </td>
                       <td> {
                             task['deadline']
-                        } < /td>
-                        <td > {
+                        } </td>
+                        <td> {
                             task['Id']
-                        } < /td>
-                        <td> <>< Button onClick = {
+                        } </td>
+                        <td><> <Button onClick = {
                             () => {
                                 this.setState({
                                     isOpen: !this.state.isOpen
@@ -135,28 +136,26 @@ class Mytasks extends React.Component {
                                     desc: task['post']
                                 });
                             }
-                        } > Description < /Button>
-                        < Modal show = {
+                        } > Description </Button>
+                        <Modal show = {
                             this.state.isOpen
                         }
                         onHide = {
                           this.toggleModal
-                        } >
+                        }>
                                                  <ModalHeader closeButton >
-                        <ModalTitle > Description < /ModalTitle>
+                        <ModalTitle > Description </ModalTitle>
                         </ModalHeader>
                         <ModalBody> {
                             this.state.desc
-                        } < /ModalBody>
+                        } </ModalBody>
                         <Modal.Footer >
                         <Button
                         onClick = {
                             this.toggleModal
                         } >
-                        Close <
-                        /Button> <
-                        /Modal.Footer> <
-                        /Modal>
+                        Close </Button> 
+                        </Modal.Footer> </Modal>
                         </>
                         </td>
                         <td>
@@ -173,38 +172,24 @@ class Mytasks extends React.Component {
 
             render() { //Whenever our class runs, render method will be called automatically, it may have already defined in the constructor behind the scene.
                 console.log('In render')
-                return ( <
-                    MDBContainer >
-                    <
-                    MDBRow className = 'flex-center' >
-                    <
-                    MDBCol md = "10" >
-                    <
-                    MDBCard >
-                    <
-                    MDBCardBody >
-                    <
-                    MDBTable striped >
-                    <
-                    MDBTableHead >
-                    <
-                    tr > {
+                return( <MDBContainer>
+                       <Toolbar>
+                    </Toolbar>
+                    <MDBRow className = 'flex-center'>
+                    <MDBCol md = "10" >
+                    <MDBCard>
+                    <MDBCardBody>
+                    <MDBTable striped >
+                    <MDBTableHead >
+                    <tr > {
                         this.renderTableHeader()
-                    } <
-                    /tr> <
-                    /MDBTableHead> <
-                    MDBTableBody > {
+                    } </tr> </MDBTableHead> <MDBTableBody > {
                         this.renderTableData()
-                    } <
-                    /MDBTableBody> <
-                    /MDBTable> <
-                    /MDBCardBody> <
-                    /MDBCard> <
-                    /MDBCol> <
-                    /MDBRow> <
-                    /MDBContainer>
+                    } </MDBTableBody>
+                     </MDBTable> </MDBCardBody> </MDBCard> </MDBCol> </MDBRow> </MDBContainer>
                 );
             }
         }
 
-        export default Mytasks;
+
+export default Mytasks;

@@ -96,13 +96,14 @@ function SignIn(props) {
       body:JSON.stringify({email,password})
       
       }
-  ).then(response => response.text()).then(result =>  {
-    console.log(result);
-    if (result=="Valid") {    
-      //props.handleSuccessfulAuth(finalresult);}      
-      {props.handleSuccessfulAuth(email)}   
+  ).then(response => response.json()).then(result =>  {
+    console.log(result['status']);
+    if (result['status']=="Valid") {    
+
+      {props.handleSuccessfulAuth(result['login_user_id'])}   
      }
       else{
+        alert("INVALID LOGIN DETAILS")
         console.log("no next page");
         
       }
@@ -196,6 +197,10 @@ const openMainpage=()=>{
         let [emailError, setEmailError] = useState("");
         let [passwordError, setPasswordError] = useState("");
         let finalresult = "";
+
+        var someVarName = localStorage.getItem("localuserEmail");
+        // console.log("email after reload in signin", someVarName);
+    
 
         return (
             <Container component="main" maxWidth="xs">

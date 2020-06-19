@@ -7,6 +7,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
 import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
+import Toolbar from '@material-ui/core/Toolbar';
 
 class Profile extends React.Component
 {
@@ -199,6 +200,8 @@ class Profile extends React.Component
 
 
   		<MDBContainer>
+      <Toolbar>
+      </Toolbar>
   			<MDBRow className='flex-center'>
   				<MDBCol md="5">
   					<MDBCard>
